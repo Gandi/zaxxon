@@ -1,7 +1,4 @@
-(function(window, document, undefined) {
-    var zaxxon = {
-        version: '0.1'
-    };
+import "start";
 
-    return zaxxon;
-})();
+
+import "end";
