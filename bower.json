@@ -1,0 +1,18 @@
+{
+  "name": "zaxxon",
+  "version": "0.0.1",
+  "ignore": [
+    "**/.*",
+    "build",
+    "speed",
+    "test",
+    "*.md",
+    "package.json",
+    "bower.json"
+  ],
+  "keywords": [
+    "zaxxon",
+    "javascript",
+    "library"
+  ]
+}

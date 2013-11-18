@@ -1,0 +1,35 @@
+{
+  "name": "zaxxon",
+  "version": "0.0.1",
+  "description": "A library to make pretty isometric map with SVG",
+  "keywords": [
+    "map",
+    "isometric",
+    "svg"
+  ],
+  "homepage": "http://github.com/birdy-/zaxxon",
+  "author": "Clément Danjou (http://github.com/birdy-)",
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/birdy-/zaxxon.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/birdy-/zaxxon/blob/master/LICENSE"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "0.4.1",
+    "grunt-contrib-uglify": "0.2.7"
+  },
+  "bugs": {
+    "url": "https://github.com/birdy-/zaxxon/issues"
+  },
+  "main": "zaxxon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "BSD-2-Clause"
+}
