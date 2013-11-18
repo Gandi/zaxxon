@@ -1,2 +1,10 @@
-node_modules
+.project
+.settings
+*~
+*.diff
+*.patch
 .DS_Store
+build
+bower_components
+bower_modules
+node_modules
