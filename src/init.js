@@ -1,15 +1,17 @@
+var config = {
+    container: 'zaxxon'
+};
+var container;
 zaxxon.init = function(userConfig) {
-    var config = {
-        container: 'zaxxon'
-    };
-
     for (var attrname in userConfig) {
         config[attrname] = userConfig[attrname];
     }
     
-    zaxxon._config = config;
+    config = config;
 
-    zaxxon._createSVG();
+    createSVG();
+
+    refreshTiles();
 
     return zaxxon;
 };
