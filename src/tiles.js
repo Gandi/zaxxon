@@ -66,8 +66,8 @@ var Tiles = function() {
                 rect.setAttributeNS(null, 'y', size*i);
                 rect.setAttributeNS(null, 'width', size);
                 rect.setAttributeNS(null, 'height', size);
-                rect.setAttributeNS(null, 'fill', '#00ff33');
-                rect.setAttributeNS(null, 'stroke', '#000000');
+                rect.setAttributeNS(null, 'fill', config.cellsColor);
+                rect.setAttributeNS(null, 'stroke', config.cellsStroke);
                 rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + rotationCenter + ' ' + rotationCenter + ')');
                 tiles.container.appendChild(rect);
             }
@@ -126,6 +126,7 @@ var Tiles = function() {
             if(zoom == minZoom) return;
             zoom--;
         }
+        console.log(zoom);
         var containerWidth = container.offsetWidth;
         var containerHeight = container.offsetHeight;
         var center = containerWidth/2;

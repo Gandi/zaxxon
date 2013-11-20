@@ -7,12 +7,14 @@ zaxxon.version = '0.0.1'
 var config = {
     container: 'zaxxon',
     tiles: {
-        cols: 10,
-        rows: 10
+        cols: 15,
+        rows: 15
     },
-    zoom: 10,
+    cellsColor: '#aaccee',
+    cellsStroke: '#003355',
+    zoom: 7,
     minZoom: 5,
-    maxZoom: 18
+    maxZoom: 15
 };
 
 var container,
