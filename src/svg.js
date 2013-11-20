@@ -4,8 +4,5 @@ var createSVG = function() {
     svg = document.createElementNS (xmlns, "svg");
     svg.setAttributeNS(null, 'width', container.offsetWidth);
     svg.setAttributeNS(null, 'height', container.offsetHeight);
-    containerTiles = document.createElementNS (xmlns, "g");
-    containerTiles.id = 'zaxxon-tiles';
-    svg.appendChild(containerTiles);
     container.appendChild(svg);
 };
