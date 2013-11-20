@@ -1,3 +1,9 @@
+var zaxxon = function(userConfig) {
+    return zaxxon.prototype.init(userConfig);
+};
+
+zaxxon.version = '0.0.1'
+
 var config = {
     container: 'zaxxon',
     tiles: {
