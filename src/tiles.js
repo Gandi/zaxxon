@@ -35,7 +35,7 @@ var Tiles = (function() {
     var spawn = function(self) {
         self.container = document.createElementNS (xmlns, "g");
         self.container.id = 'zaxxon-tiles';
-        svg.appendChild(self.container);
+        self.mainContainer.appendChild(self.container);
 
         var mainContainerWidth = self.mainContainer.getBoundingClientRect().width;
         var mainContainerHeight = self.mainContainer.getBoundingClientRect().height;

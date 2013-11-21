@@ -1,23 +1,24 @@
-var bindEvents = function(tiles) {
+zaxxon.prototype._bindEvents = function() {
+    var self = this;
     var mousemove = function(e) {
-        tiles.mousemoveListener(tiles, e);
+        self.tiles.mousemoveListener(self.tiles, e);
     }
 
     var mousewheel = function(e) {
-        tiles.mousewheelListener(tiles, e);
+        self.tiles.mousewheelListener(self.tiles, e);
     }
 
-    mainContainer.addEventListener('mousedown', function(e) {
+    this.container.addEventListener('mousedown', function(e) {
         e.stopPropagation();
         dragEvent = e;
         this.addEventListener('mousemove', mousemove);
     });
 
-    mainContainer.addEventListener('mouseup', function() {
+    this.container.addEventListener('mouseup', function() {
         dragEvent = undefined;
         this.removeEventListener('mousemove', mousemove);
     });
 
-    mainContainer.addEventListener('mousewheel', mousewheel);
-    mainContainer.addEventListener('wheel', mousewheel);
+    this.container.addEventListener('mousewheel', mousewheel);
+    this.container.addEventListener('wheel', mousewheel);
 };

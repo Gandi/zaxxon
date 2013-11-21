@@ -17,10 +17,7 @@ var config = {
     maxZoom: 15
 };
 
-var mainContainer,
-    tiles,
-    dragEvent,
-    svg;
+var dragEvent;
 
 zaxxon.prototype.init = function(userConfig) {
     for (var attrname in userConfig) {
@@ -28,11 +25,11 @@ zaxxon.prototype.init = function(userConfig) {
     }
     
     config = config;
-    mainContainer = document.getElementById(config.container);
-    createSVG();
-    tiles = new Tiles(mainContainer);
+    this.container = document.getElementById(config.container);
+    createSVG(this);
+    this.tiles = new Tiles(this.svg);
 
-    bindEvents(tiles);
+    this._bindEvents();
 
     return zaxxon;
 };
