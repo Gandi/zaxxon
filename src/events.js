@@ -10,7 +10,6 @@ var bindEvents = function(tiles) {
     mainContainer.addEventListener('mousedown', function(e) {
         e.stopPropagation();
         dragEvent = e;
-        console.log(this);
         this.addEventListener('mousemove', mousemove);
     });
 
