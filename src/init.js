@@ -2,7 +2,7 @@ var zaxxon = function(userConfig) {
     return zaxxon.prototype.init(userConfig);
 };
 
-zaxxon.version = '0.0.1'
+zaxxon.prototype.version = '0.0.1'
 
 var config = {
     container: 'zaxxon',
@@ -17,8 +17,9 @@ var config = {
     maxZoom: 15
 };
 
-var container,
+var mainContainer,
     tiles,
+    dragEvent,
     svg;
 
 zaxxon.prototype.init = function(userConfig) {
@@ -27,9 +28,11 @@ zaxxon.prototype.init = function(userConfig) {
     }
     
     config = config;
-    container = document.getElementById(config.container);
+    mainContainer = document.getElementById(config.container);
     createSVG();
     tiles = new Tiles();
+
+    bindEvents(tiles);
 
     return zaxxon;
 };
