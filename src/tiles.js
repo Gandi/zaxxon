@@ -1,36 +1,26 @@
 var Tiles = (function() {
-    var tiles = function() {
-        return this.init();
+    var tiles = function(mainContainer) {
+        return this.init(mainContainer);
     };
 
-    var containerTilesX,
-    containerTilesY,
-    cols,
-    rows,
-    minZoom,
-    maxZoom;
-
-    tiles.prototype.zoom;
-    tiles.prototype.container;
-    tiles.prototype.containerWidth;
-    tiles.prototype.containerHeight;
-
-    tiles.prototype.init = function() {
-        this.refresh();
+    tiles.prototype.init = function(mainContainer) {
+        this.mainContainer = mainContainer;
+        this.minZoom = config.minZoom;
+        this.maxZoom = config.maxZoom;
+        this.zoom = config.zoom;
+        this.cols = config.tiles.cols;
+        this.rows = config.tiles.rows;
+        spawn(this);
         return this;
     };
 
     tiles.prototype.refresh = function() {
-        if (this.zoom === undefined) {
-            spawn(this);
-        }
-
-        var parentContainerWidth = mainContainer.getBoundingClientRect().width;
+        var parentContainerWidth = this.mainContainer.getBoundingClientRect().width;
         var size = parentContainerWidth/this.zoom;
 
-        for(var i = 0; i < rows; i++) {
-            for(var j = 0; j < cols; j++) {
-                var id = i * cols + j;
+        for(var i = 0; i < this.rows; i++) {
+            for(var j = 0; j < this.cols; j++) {
+                var id = i * this.cols + j;
                 var rect = this.container.childNodes[id];
                 rect.setAttributeNS(null, 'x', size*j);
                 rect.setAttributeNS(null, 'y', size*i);
@@ -43,23 +33,17 @@ var Tiles = (function() {
     };
 
     var spawn = function(self) {
-        minZoom = config.minZoom;
-        maxZoom = config.maxZoom;
-        self.zoom = config.zoom;
-        cols = config.tiles.cols;
-        rows = config.tiles.rows;
-
         self.container = document.createElementNS (xmlns, "g");
         self.container.id = 'zaxxon-tiles';
         svg.appendChild(self.container);
 
-        var mainContainerWidth = mainContainer.getBoundingClientRect().width;
-        var mainContainerHeight = mainContainer.getBoundingClientRect().height;
+        var mainContainerWidth = self.mainContainer.getBoundingClientRect().width;
+        var mainContainerHeight = self.mainContainer.getBoundingClientRect().height;
         var size = mainContainerWidth/self.zoom;
         var rotationCenter = 0;
 
-        for(var i = 0; i < rows; i++) {
-            for(var j = 0; j < cols; j++) {
+        for(var i = 0; i < self.rows; i++) {
+            for(var j = 0; j < self.cols; j++) {
                 var rect = document.createElementNS (xmlns, 'rect');
                 rect.setAttributeNS(null, 'x', size*j);
                 rect.setAttributeNS(null, 'y', size*i);
@@ -81,8 +65,8 @@ var Tiles = (function() {
     tiles.prototype.mousemoveListener = function(self, e) {
         var deltaX = e.pageX - dragEvent.pageX;
         var deltaY = e.pageY*2 - dragEvent.pageY*2;
-        var mainContainerWidth = mainContainer.getBoundingClientRect().width;
-        var mainContainerHeight = mainContainer.getBoundingClientRect().height;
+        var mainContainerWidth = self.mainContainer.getBoundingClientRect().width;
+        var mainContainerHeight = self.mainContainer.getBoundingClientRect().height;
 
         if (self.containerWidth < mainContainerWidth
            || (self.containerX + deltaX < 0
@@ -103,16 +87,16 @@ var Tiles = (function() {
         var wheelDelta = e.wheelDelta || e.deltaY;
         if ((e.deltaY && e.deltaY > 0)
             || (e.wheelDeltaY && e.wheelDelta <= -120)) {
-            if (self.zoom == maxZoom) return;
+            if (self.zoom == self.maxZoom) return;
             self.zoom++;
         } else if ((e.deltaY && e.deltaY < 0)
                    || (e.wheelDeltaY && e.wheelDelta >= 120)) {
-            if (self.zoom == minZoom) return;
+            if (self.zoom == self.minZoom) return;
             self.zoom--;
         }
 
-        var mainContainerWidth = mainContainer.getBoundingClientRect().width;
-        var mainContainerHeight = mainContainer.getBoundingClientRect().height;
+        var mainContainerWidth = self.mainContainer.getBoundingClientRect().width;
+        var mainContainerHeight = self.mainContainer.getBoundingClientRect().height;
         var center = mainContainerWidth/2;
 
         self.refresh();

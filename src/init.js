@@ -30,7 +30,7 @@ zaxxon.prototype.init = function(userConfig) {
     config = config;
     mainContainer = document.getElementById(config.container);
     createSVG();
-    tiles = new Tiles();
+    tiles = new Tiles(mainContainer);
 
     bindEvents(tiles);
 
