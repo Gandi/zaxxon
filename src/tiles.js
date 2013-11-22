@@ -1,15 +1,15 @@
 var Tiles = (function() {
-    var tiles = function(mainContainer) {
-        return this.init(mainContainer);
+    var tiles = function(z) {
+        return this.init(z);
     };
 
-    tiles.prototype.init = function(mainContainer) {
-        this.mainContainer = mainContainer;
-        this.minZoom = config.minZoom;
-        this.maxZoom = config.maxZoom;
-        this.zoom = config.zoom;
-        this.cols = config.tiles.cols;
-        this.rows = config.tiles.rows;
+    tiles.prototype.init = function(z) {
+        this.mainContainer = z.svg;
+        this.minZoom = z.config.minZoom;
+        this.maxZoom = z.config.maxZoom;
+        this.zoom = z.config.zoom;
+        this.cols = z.config.tiles.cols;
+        this.rows = z.config.tiles.rows;
         spawn(this);
         return this;
     };
@@ -49,8 +49,8 @@ var Tiles = (function() {
                 rect.setAttributeNS(null, 'y', size*i);
                 rect.setAttributeNS(null, 'width', size);
                 rect.setAttributeNS(null, 'height', size);
-                rect.setAttributeNS(null, 'fill', config.cellsColor);
-                rect.setAttributeNS(null, 'stroke', config.cellsStroke);
+                rect.setAttributeNS(null, 'fill', '#aaccee');
+                rect.setAttributeNS(null, 'stroke', '#003355');
                 rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + rotationCenter + ' ' + rotationCenter + ')');
                 self.container.appendChild(rect);
             }
