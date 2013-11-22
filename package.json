@@ -16,7 +16,7 @@
   },
   "licenses": [
     {
-      "type": "MIT",
+      "type": "GPLv2",
       "url": "https://github.com/birdy-/zaxxon/blob/master/LICENSE"
     }
   ],
@@ -33,5 +33,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "MIT"
+  "license": "GPLv2"
 }
