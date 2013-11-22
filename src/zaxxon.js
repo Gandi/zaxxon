@@ -2,8 +2,8 @@
 import "start";
 
 import "init";
-import "svg";
+import "map";
 import "tiles";
-import "events";
+import "items";
 
 import "end";

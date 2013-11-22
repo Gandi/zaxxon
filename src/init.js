@@ -3,6 +3,8 @@ var zaxxon = function(userConfig) {
     return this.init(userConfig);
 };
 
+var xmlns = "http://www.w3.org/2000/svg";
+
 zaxxon.prototype.version = '0.0.1'
 
 zaxxon.prototype.config = {
@@ -24,9 +26,8 @@ zaxxon.prototype.init = function(userConfig) {
     }
 
     this.container = document.getElementById(this.config.container);
-    createSVG(this);
-    this.tiles = new Tiles(this);
-    bindEvents(this);
+
+    map = new Map(this);
 
     return this;
 };

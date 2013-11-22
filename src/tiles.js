@@ -1,16 +1,17 @@
 var Tiles = (function() {
-    var tiles = function(z) {
-        return this.init(z);
+    var tiles = function(m) {
+        return this.init(m);
     };
 
-    tiles.prototype.init = function(z) {
-        this.mainContainer = z.svg;
-        this.minZoom = z.config.minZoom;
-        this.maxZoom = z.config.maxZoom;
-        this.zoom = z.config.zoom;
-        this.cols = z.config.tiles.cols;
-        this.rows = z.config.tiles.rows;
-        spawn(this);
+    tiles.prototype.init = function(m) {
+        this._parent = m;
+        this.mainContainer = m.container;
+        this.minZoom = m.minZoom;
+        this.maxZoom = m.maxZoom;
+        this.zoom = m.zoom;
+        this.cols = m.cols;
+        this.rows = m.rows;
+        this.spawn(this);
         return this;
     };
 
@@ -32,18 +33,18 @@ var Tiles = (function() {
         this.containerHeight = this.container.getBoundingClientRect().height;
     };
 
-    var spawn = function(self) {
-        self.container = document.createElementNS (xmlns, "g");
-        self.container.id = 'zaxxon-tiles';
-        self.mainContainer.appendChild(self.container);
+    tiles.prototype.spawn = function() {
+        this.container = document.createElementNS (xmlns, "g");
+        this.container.id = 'zaxxon-tiles';
+        this.mainContainer.appendChild(this.container);
 
-        var mainContainerWidth = self.mainContainer.getBoundingClientRect().width;
-        var mainContainerHeight = self.mainContainer.getBoundingClientRect().height;
-        var size = mainContainerWidth/self.zoom;
+        var mainContainerWidth = this.mainContainer.getBoundingClientRect().width;
+        var mainContainerHeight = this.mainContainer.getBoundingClientRect().height;
+        var size = mainContainerWidth/this.zoom;
         var rotationCenter = 0;
 
-        for(var i = 0; i < self.rows; i++) {
-            for(var j = 0; j < self.cols; j++) {
+        for(var i = 0; i < this.rows; i++) {
+            for(var j = 0; j < this.cols; j++) {
                 var rect = document.createElementNS (xmlns, 'rect');
                 rect.setAttributeNS(null, 'x', size*j);
                 rect.setAttributeNS(null, 'y', size*i);
@@ -52,14 +53,14 @@ var Tiles = (function() {
                 rect.setAttributeNS(null, 'fill', '#aaccee');
                 rect.setAttributeNS(null, 'stroke', '#003355');
                 rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + rotationCenter + ' ' + rotationCenter + ')');
-                self.container.appendChild(rect);
+                this.container.appendChild(rect);
             }
         }
-        self.containerWidth = self.container.getBoundingClientRect().width;
-        self.containerHeight = self.container.getBoundingClientRect().height;
-        self.containerX = mainContainerWidth/2 - self.containerWidth/2;
-        self.containerY = mainContainerHeight;
-        moveContainer(self);
+        this.containerWidth = this.container.getBoundingClientRect().width;
+        this.containerHeight = this.container.getBoundingClientRect().height;
+        this.containerX = mainContainerWidth/2 - this.containerWidth/2;
+        this.containerY = mainContainerHeight;
+        moveContainer(this);
     };
 
     tiles.prototype.mousemoveListener = function(self, e) {
