@@ -1,5 +1,6 @@
 var zaxxon = function(userConfig) {
-    return zaxxon.prototype.init(userConfig);
+
+    return this.init(userConfig);
 };
 
 zaxxon.prototype.version = '0.0.1'
@@ -23,13 +24,12 @@ zaxxon.prototype.init = function(userConfig) {
     for (var attrname in userConfig) {
         config[attrname] = userConfig[attrname];
     }
-    
+
     config = config;
     this.container = document.getElementById(config.container);
     createSVG(this);
     this.tiles = new Tiles(this.svg);
-
     this._bindEvents();
 
-    return zaxxon;
+    return this;
 };
