@@ -27,7 +27,7 @@ zaxxon.prototype.init = function(userConfig) {
 
     this.container = document.getElementById(this.config.container);
 
-    map = new Map(this);
+    this.map = new Map(this);
 
     return this;
 };
