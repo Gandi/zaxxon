@@ -3,34 +3,29 @@ var Items = (function() {
         return this.init(z);
     };
 
-    items.prototype.init = function(z) {
-        this._parent = z;
-        this.cols = z.cols;
+    items.prototype.init = function(m) {
+        this._parent = m;
+        this.cols = m.cols;
+        this.spawn();
         return this;
+    };
+
+    items.prototype.spawn = function() {
+        this.container = document.createElementNS (xmlns, "g");
+        this.container.id = 'zaxxon-items';
+        this._parent.container.appendChild(this.container);
     };
 
     items.prototype.add = function(item, x, y) {
         var id = y * this.cols + x;
-        var rect = this._parent.tiles.container.childNodes[x];
+        var rect = this._parent.tiles.container.childNodes[id];
         var g;
-        if (rect.nextSibling) {
-            if(rect.nextSibling.tagName != 'g') {
-                g = document.createElementNS (xmlns, 'g');            
-                rect.parentNode.insertBefore(g, rect.nextSibling);
-            } else {
-                g = rect.nextSibling;
-            }
-        }
-        else {
-            if(rect.parentNode.lastChild.tagName != 'g') {
-                g = document.createElementNS (xmlns, 'g');
-                rect.parentNode.appenChild(g);
-            } else {
-                g = rect.parentNode.lastChild;
-            }
-        }
+        g = document.createElementNS (xmlns, 'g');
 
         g.appendChild(item);
+
+        this.container.appendChild(g);
+
         return this;
     };
 

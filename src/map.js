@@ -5,7 +5,7 @@ var Map = (function() {
 
     map.prototype.init = function(z) {
         this._parent = z;
-        this.createSVG();
+        this.createG();
         this.parentContainer = z.container;
         this.minZoom = z.config.minZoom;
         this.maxZoom = z.config.maxZoom;
@@ -18,10 +18,8 @@ var Map = (function() {
         return this;
     };
 
-    map.prototype.createSVG = function() {
-        this.container = document.createElementNS (xmlns, "svg");
-        this.container.setAttributeNS(null, 'width', this._parent.container.offsetWidth);
-        this.container.setAttributeNS(null, 'height', this._parent.container.offsetHeight);
+    map.prototype.createG = function() {
+        this.container = document.createElementNS (xmlns, "g");
         this._parent.container.appendChild(this.container);
     };
 
@@ -35,19 +33,19 @@ var Map = (function() {
             self.tiles.mousewheelListener(self.tiles, e);
         }
 
-        this.container.addEventListener('mousedown', function(e) {
+        this._parent.container.addEventListener('mousedown', function(e) {
             e.stopPropagation();
-            dragEvent = e;
+            self.dragEvent = e;
             this.addEventListener('mousemove', mousemove);
         });
     
-        this.container.addEventListener('mouseup', function() {
-            dragEvent = undefined;
+        this._parent.container.addEventListener('mouseup', function() {
+            self.dragEvent = undefined;
             this.removeEventListener('mousemove', mousemove);
         });
     
-        this.container.addEventListener('mousewheel', mousewheel);
-        this.container.addEventListener('wheel', mousewheel);
+        this._parent.container.addEventListener('mousewheel', mousewheel);
+        this._parent.container.addEventListener('wheel', mousewheel);
     };
 
     return map;

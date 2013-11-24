@@ -18,16 +18,22 @@ zaxxon.prototype.config = {
     maxZoom: 15
 };
 
-var dragEvent;
-
 zaxxon.prototype.init = function(userConfig) {
     for (var attrname in userConfig) {
         this.config[attrname] = userConfig[attrname];
     }
 
-    this.container = document.getElementById(this.config.container);
-
+    this.createSVG();
+    
     this.map = new Map(this);
 
     return this;
+};
+
+zaxxon.prototype.createSVG = function() {
+    var c = document.getElementById(this.config.container);
+    this.container = document.createElementNS (xmlns, "svg");
+    this.container.setAttributeNS(null, 'width', c.offsetWidth);
+    this.container.setAttributeNS(null, 'height', c.offsetHeight);
+    c.appendChild(this.container);
 };

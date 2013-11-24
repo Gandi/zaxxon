@@ -5,7 +5,7 @@ var Tiles = (function() {
 
     tiles.prototype.init = function(m) {
         this._parent = m;
-        this.mainContainer = m.container;
+        this.mainContainer = m._parent.container;
         this.minZoom = m.minZoom;
         this.maxZoom = m.maxZoom;
         this.zoom = m.zoom;
@@ -36,7 +36,7 @@ var Tiles = (function() {
     tiles.prototype.spawn = function() {
         this.container = document.createElementNS (xmlns, "g");
         this.container.id = 'zaxxon-tiles';
-        this.mainContainer.appendChild(this.container);
+        this._parent.container.appendChild(this.container);
 
         var mainContainerWidth = this.mainContainer.getBoundingClientRect().width;
         var mainContainerHeight = this.mainContainer.getBoundingClientRect().height;
@@ -64,8 +64,8 @@ var Tiles = (function() {
     };
 
     tiles.prototype.mousemoveListener = function(self, e) {
-        var deltaX = e.pageX - dragEvent.pageX;
-        var deltaY = e.pageY*2 - dragEvent.pageY*2;
+        var deltaX = e.pageX - self._parent.dragEvent.pageX;
+        var deltaY = e.pageY*2 - self._parent.dragEvent.pageY*2;
         var mainContainerWidth = self.mainContainer.getBoundingClientRect().width;
         var mainContainerHeight = self.mainContainer.getBoundingClientRect().height;
 
@@ -80,7 +80,7 @@ var Tiles = (function() {
             self.containerY += deltaY;
         }
         moveContainer(self);
-        dragEvent = e;
+        self._parent.dragEvent = e;
     };
 
     tiles.prototype.mousewheelListener = function(self, e) {
