@@ -10,8 +10,8 @@ zaxxon.prototype.version = '0.0.1'
 zaxxon.prototype.config = {
     container: 'zaxxon',
     tiles: {
-        cols: 15,
-        rows: 15
+        cols: 3,
+        rows: 3
     },
     zoom: 7,
     minZoom: 5,

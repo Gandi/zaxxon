@@ -19,8 +19,13 @@ var Items = (function() {
     items.prototype.add = function(item, x, y) {
         var id = y * this.cols + x;
         var rect = this._parent.tiles.container.childNodes[id];
-        var g;
-        g = document.createElementNS (xmlns, 'g');
+        var g = document.getElementById('items-id');
+        if(!g) {
+            g = document.createElementNS (xmlns, 'g');            
+            this.container.appendChild(g);
+        } else {
+            g.childNodes = new Array();
+        }
 
         g.appendChild(item);
 
