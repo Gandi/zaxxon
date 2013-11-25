@@ -7,15 +7,12 @@ var Map = (function() {
         this._parent = z;
         this.createG();
         this.parentContainer = z.container;
-        this.minZoom = z.config.minZoom;
-        this.maxZoom = z.config.maxZoom;
         this.zoom = z.config.zoom;
         this.zoomX = this.zoom/10;
         this.zoomY = this.zoom/10;
         this.cols = z.config.tiles.cols;
         this.rows = z.config.tiles.rows;
 
-        this.bindEvents();
         this.tiles = new Tiles(this);
         this.items = new Items(this);
 
@@ -38,106 +35,66 @@ var Map = (function() {
         this._parent.container.appendChild(this.container);
     };
 
-    map.prototype.bindEvents = function() {
-        var self = this;
-        var mousemove = function(e) {
-            self.mousemoveListener(self, e);
-        }
-    
-        var mousewheel = function(e) {
-            self.mousewheelListener(self, e);
+    map.prototype.move = function(deltaX, deltaY) {
+        var mainContainerWidth = this._parent.container.offsetWidth;
+        var mainContainerHeight = this._parent.container.offsetHeight;
+
+        if (this.containerWidth < mainContainerWidth
+           || (this.containerX + deltaX < 0
+               && this.containerX + deltaX > mainContainerWidth - this.containerWidth)) {
+            this.containerX += deltaX;
         }
 
-        this._parent.container.addEventListener('mousedown', function(e) {
-            e.stopPropagation();
-            self.dragEvent = e;
-            this.addEventListener('mousemove', mousemove);
-        });
-    
-        this._parent.container.addEventListener('mouseup', function() {
-            self.dragEvent = undefined;
-            this.removeEventListener('mousemove', mousemove);
-        });
-    
-        this._parent.container.addEventListener('mousewheel', mousewheel);
-        this._parent.container.addEventListener('wheel', mousewheel);
+        if (this.containerHeight < mainContainerHeight
+           || (this.containerY + deltaY < this.containerHeight/2
+               && this.containerY + deltaY > mainContainerHeight - this.containerHeight/2)) {
+            this.containerY += deltaY;
+        }
+
+        updateContainer(this);
     };
 
-    map.prototype.mousemoveListener = function(self, e) {
-        var deltaX = e.pageX - self.dragEvent.pageX;
-        var deltaY = e.pageY - self.dragEvent.pageY;
-        var mainContainerWidth = self._parent.container.offsetWidth;
-        var mainContainerHeight = self._parent.container.offsetHeight;
-
-        if (self.containerWidth < mainContainerWidth
-           || (self.containerX + deltaX < 0
-               && self.containerX + deltaX > mainContainerWidth - self.containerWidth)) {
-            self.containerX += deltaX;
-        }
-
-        if (self.containerHeight < mainContainerHeight
-           || (self.containerY + deltaY < this.containerHeight/2
-               && self.containerY + deltaY > mainContainerHeight - self.containerHeight/2)) {
-            self.containerY += deltaY;
-        }
-
-        updateContainer(self);
-        self.dragEvent = e;
-    };
-
-    map.prototype.mousewheelListener = function(self, e) {
-        var oldContainerTilesWidth = self.containerWidth;
-        var wheelDelta = e.wheelDelta || e.deltaY;
-        if ((e.deltaY && e.deltaY > 0)
-            || (e.wheelDeltaY && e.wheelDelta <= -120)) {
-            if (self.zoom == self.maxZoom) return;
-            self.zoom++;
-            self.zoomX *= 1/1.5;
-            self.zoomY *= 1/1.5;
-        } else if ((e.deltaY && e.deltaY < 0)
-                   || (e.wheelDeltaY && e.wheelDelta >= 120)) {
-            if (self.zoom == self.minZoom) return;
-            self.zoom--;
-            self.zoomX *= 1.5;
-            self.zoomY *= 1.5;
-        }
+    map.prototype.zoomto = function(zoom) {
+        var oldContainerTilesWidth = this.containerWidth;
+        this.zoom = zoom;
+        this.zoomX = this.zoomY = this.zoom/10;
 
         var mainContainerWidth = this._parent.container.offsetWidth;
         var mainContainerHeight = this._parent.container.offsetHeight;
         var center = mainContainerWidth/2;
 
-        updateContainer(self);
+        updateContainer(this);
 
         this.containerWidth = this.container.getBoundingClientRect().width;
         this.containerHeight = this.container.getBoundingClientRect().height;
 
-        var cT = (center - self.containerX)/oldContainerTilesWidth * self.containerWidth;
-        if (self.containerHeight > mainContainerHeight) {
-            if (self.containerY > self.containerHeight/2) {
-                self.containerY = self.containerHeight/2;
-            } else if (self.containerY < (mainContainerHeight - self.containerHeight/2)*2) {
-                self.containerY = (mainContainerHeight - self.containerHeight/2);
+        var cT = (center - this.containerX)/oldContainerTilesWidth * this.containerWidth;
+        if (this.containerHeight > mainContainerHeight) {
+            if (this.containerY > this.containerHeight/2) {
+                this.containerY = this.containerHeight/2;
+            } else if (this.containerY < (mainContainerHeight - this.containerHeight/2)*2) {
+                this.containerY = (mainContainerHeight - this.containerHeight/2);
             }
         }
 
-        if (self.containerWidth < mainContainerWidth) {
-            if(center - cT > mainContainerWidth - self.containerWidth) {
-                self.containerX = mainContainerWidth - self.containerWidth;
+        if (this.containerWidth < mainContainerWidth) {
+            if(center - cT > mainContainerWidth - this.containerWidth) {
+                this.containerX = mainContainerWidth - this.containerWidth;
             } else if (center - cT < 0) {
-                self.containerX = 0;
+                this.containerX = 0;
             } else {
-                self.containerX = (center - cT);
+                this.containerX = (center - cT);
             }
         } else {
-            if ((center - cT) < mainContainerWidth - self.containerWidth) {
-                self.containerX = mainContainerWidth - self.containerWidth;
+            if ((center - cT) < mainContainerWidth - this.containerWidth) {
+                this.containerX = mainContainerWidth - this.containerWidth;
             } else if ((center - cT) > 0) {
-                self.containerX = 0;
+                this.containerX = 0;
             } else {
-                self.containerX = (center - cT);
+                this.containerX = (center - cT);
             }
         }
-        updateContainer(self);
+        updateContainer(this);
     };
 
     var updateContainer = function(self) {

@@ -9,10 +9,6 @@ var Tiles = (function() {
         this.minZoom = m.minZoom;
         this.maxZoom = m.maxZoom;
         this.zoom = m.zoom;
-        this.zoomX = m.zoom/10;
-        this.zoomY = m.zoom/20;
-        this.cols = m.cols;
-        this.rows = m.rows;
         this.spawn(this);
         return this;
     };
@@ -27,8 +23,8 @@ var Tiles = (function() {
         var size = mainContainerWidth/5;
         var rotationCenter = 0;
 
-        for(var i = 0; i < this.rows; i++) {
-            for(var j = 0; j < this.cols; j++) {
+        for(var i = 0; i < this._parent.rows; i++) {
+            for(var j = 0; j < this._parent.cols; j++) {
                 var rect = document.createElementNS (xmlns, 'rect');
                 rect.setAttributeNS(null, 'x', size*j);
                 rect.setAttributeNS(null, 'y', size*i);
@@ -40,10 +36,6 @@ var Tiles = (function() {
                 this.container.appendChild(rect);
             }
         }
-        this.containerWidth = this.container.getBoundingClientRect().width;
-        this.containerHeight = this.container.getBoundingClientRect().height;
-        this.containerX = mainContainerWidth/2 - this.containerWidth/2;
-        this.containerY = mainContainerHeight;
         this.container.setAttributeNS(null, 'transform', 'scale(1 0.5)');
     };
 

@@ -26,7 +26,7 @@ var Items = (function() {
         } else {
             g.childNodes = new Array();
         }
-
+        console.log(item);
         g.appendChild(item);
 
         this.container.appendChild(g);
