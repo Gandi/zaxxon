@@ -47,25 +47,5 @@ var Tiles = (function() {
         this.container.setAttributeNS(null, 'transform', 'scale(1 0.5)');
     };
 
-    tiles.prototype.mousemoveListener = function(self, e) {
-        var deltaX = e.pageX / self.zoomX - self._parent.dragEvent.pageX / self.zoomX;
-        var deltaY = e.pageY / self.zoomY - self._parent.dragEvent.pageY / self.zoomY;
-        var mainContainerWidth = self.mainContainer.getBoundingClientRect().width / self.zoomX;
-        var mainContainerHeight = self.mainContainer.getBoundingClientRect().height / self.zoomY;
-        if (self.containerWidth < mainContainerWidth
-           || (self.containerX + deltaX < 0
-               && self.containerX + deltaX > mainContainerWidth - self.containerWidth)) {
-            self.containerX += deltaX;
-        }
-        if (self.containerHeight < mainContainerHeight
-           || (self.containerY + deltaY < self.containerHeight/2
-               && self.containerY + deltaY > (mainContainerHeight - self.containerHeight/2))) {
-            self.containerY += deltaY;
-        }
-
-        updateContainer(self);
-        self._parent.dragEvent = e;
-    };
-
     return tiles;
 })();

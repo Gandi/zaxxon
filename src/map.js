@@ -41,12 +41,10 @@ var Map = (function() {
         var self = this;
         var mousemove = function(e) {
             self.mousemoveListener(self, e);
-//            self.items.mousemoveListener(self.tiles, e);
         }
     
         var mousewheel = function(e) {
             self.mousewheelListener(self, e);
-//            self.items.mousewheelListener(self.items, e);
         }
 
         this._parent.container.addEventListener('mousedown', function(e) {
