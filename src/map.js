@@ -21,8 +21,9 @@ var Map = (function() {
 
         var mainContainerWidth = this._parent.container.offsetWidth;
         var mainContainerHeight = this._parent.container.offsetHeight;
-        this.containerWidth = this.container.getBoundingClientRect().width;
-        this.containerHeight = this.container.getBoundingClientRect().height;
+
+        this.containerWidth = this.container.getBoundingClientRect().width * this.zoomX;
+        this.containerHeight = this.container.getBoundingClientRect().height * this.zoomY;
 
         this.containerX = mainContainerWidth/2 - this.containerWidth/2;
         this.containerY = mainContainerHeight/2;
@@ -73,7 +74,7 @@ var Map = (function() {
                && self.containerX + deltaX > mainContainerWidth - self.containerWidth)) {
             self.containerX += deltaX;
         }
-        console.log(self.containerY + deltaY, this.containerHeight, mainContainerHeight - self.containerHeight/2);
+
         if (self.containerHeight < mainContainerHeight
            || (self.containerY + deltaY < this.containerHeight/2
                && self.containerY + deltaY > mainContainerHeight - self.containerHeight/2)) {
@@ -85,7 +86,7 @@ var Map = (function() {
     };
 
     map.prototype.mousewheelListener = function(self, e) {
-        var oldContainerTilesWidth = self.containerWidth * self.zoomX;
+        var oldContainerTilesWidth = self.containerWidth;
         var wheelDelta = e.wheelDelta || e.deltaY;
         if ((e.deltaY && e.deltaY > 0)
             || (e.wheelDeltaY && e.wheelDelta <= -120)) {
@@ -134,7 +135,7 @@ var Map = (function() {
     };
 
     var updateContainer = function(self) {
-        self.container.setAttributeNS(null, 'transform', 'translate(' + self.containerX + ' ' + self.containerY +') scale(' + self.zoomX + ' ' + self.zoomY + ')');
+        self.container.setAttributeNS(null, 'transform', 'translate(' + self.containerX.toFixed(3) + ' ' + self.containerY.toFixed(3) +') scale(' + self.zoomX.toFixed(3) + ' ' + self.zoomY.toFixed(3) + ')');
     };
 
     return map;
