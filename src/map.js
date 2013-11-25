@@ -129,14 +129,14 @@ var Map = (function() {
                 self.containerX = (center - cT);
             }
         } else {
-            console.log((center - cT) + mainContainerWidth/2, self.containerWidth/2);
-            if ((center - cT) + self.containerWidth/2 < mainContainerWidth/2) {
+            if ((center - cT) < mainContainerWidth - self.containerWidth) {
                 self.containerX = mainContainerWidth - self.containerWidth;
-            } else if ((center - cT) + mainContainerWidth/2 > self.containerWidth/2) {
+            } else if ((center - cT) > 0) {
                 self.containerX = 0;
+            } else {
+                self.containerX = (center - cT);
             }
         }
-
         updateContainer(self);
     };
 
