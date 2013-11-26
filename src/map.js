@@ -12,17 +12,17 @@ var Map = (function() {
         this.zoomY = this.zoom/10;
         this.cols = z.config.tiles.cols;
         this.rows = z.config.tiles.rows;
-
         this.tiles = new Tiles(this);
         this.items = new Items(this);
 
-        var mainContainerWidth = this._parent.container.offsetWidth;
-        var mainContainerHeight = this._parent.container.offsetHeight;
+        var mainContainerWidth = this._parent.container.width.baseVal.value;
+        var mainContainerHeight = this._parent.container.height.baseVal.value;
 
         this.containerWidth = this.container.getBoundingClientRect().width * this.zoomX;
         this.containerHeight = this.container.getBoundingClientRect().height * this.zoomY;
 
         this.containerX = mainContainerWidth/2 - this.containerWidth/2;
+
         this.containerY = mainContainerHeight/2;
 
         updateContainer(this);
@@ -36,8 +36,8 @@ var Map = (function() {
     };
 
     map.prototype.move = function(deltaX, deltaY) {
-        var mainContainerWidth = this._parent.container.offsetWidth;
-        var mainContainerHeight = this._parent.container.offsetHeight;
+        var mainContainerWidth = this._parent.container.width.baseVal.value;
+        var mainContainerHeight = this._parent.container.height.baseVal.value;
 
         if (this.containerWidth < mainContainerWidth
            || (this.containerX + deltaX < 0
@@ -59,8 +59,8 @@ var Map = (function() {
         this.zoom = zoom;
         this.zoomX = this.zoomY = this.zoom/10;
 
-        var mainContainerWidth = this._parent.container.offsetWidth;
-        var mainContainerHeight = this._parent.container.offsetHeight;
+        var mainContainerWidth = this._parent.container.width.baseVal.value;
+        var mainContainerHeight = this._parent.container.height.baseVal.value;
         var center = mainContainerWidth/2;
 
         updateContainer(this);

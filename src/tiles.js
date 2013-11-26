@@ -17,9 +17,8 @@ var Tiles = (function() {
         this.container = document.createElementNS (xmlns, "g");
         this.container.id = 'zaxxon-tiles';
         this._parent.container.appendChild(this.container);
-
-        var mainContainerWidth = this.mainContainer.getBoundingClientRect().width;
-        var mainContainerHeight = this.mainContainer.getBoundingClientRect().height;
+        var mainContainerWidth = this.mainContainer.width.baseVal.value;
+        var mainContainerHeight = this.mainContainer.height.baseVal.value;
         var size = mainContainerWidth/5;
         var rotationCenter = 0;
 
