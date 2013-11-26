@@ -19,17 +19,24 @@ var Items = (function() {
     items.prototype.add = function(item, x, y) {
         var id = y * this.cols + x;
         var rect = this._parent.tiles.container.childNodes[id];
-        var g = document.getElementById('items-id');
+        var rectX = rect.x.baseVal.value;
+        var rectY = rect.y.baseVal.value;
+        var g = document.getElementById('items-' + id);
         if(!g) {
-            g = document.createElementNS (xmlns, 'g');            
+            g = document.createElementNS (xmlns, 'g');
+            rect.setAttributeNS(null, 'id', 'items-' + id);
             this.container.appendChild(g);
         } else {
             g.childNodes = new Array();
         }
-        console.log(item);
         g.appendChild(item);
 
-        this.container.appendChild(g);
+        var angle = Math.PI/4;
+        var x = (rectX * Math.cos(angle) + rectY * Math.sin(angle));
+        var y = (rectX * Math.sin(angle) - rectY * Math.cos(angle)) / 2;
+        var scale = rect.getBoundingClientRect().width / item.getBoundingClientRect().width;
+
+        g.setAttributeNS(null, 'transform', 'translate(' + x + ' ' + y + ') scale(' + scale + ' ' + scale + ')');
 
         return this;
     };
