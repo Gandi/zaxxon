@@ -45,8 +45,8 @@ var Items = (function() {
         }
         g.appendChild(item);
 
-        var scale = rect.getBoundingClientRect().width / item.getBoundingClientRect().width;
-        var itemHeight = item.getBoundingClientRect().height/this._parent.zoomX*scale;
+        var scale = rect.getBoundingClientRect().width/this._parent.zoomX / item.width.baseVal.value;
+        var itemHeight = item.height.baseVal.value*scale;
         var rectHeight = rect.getBoundingClientRect().height/this._parent.zoomX;
         var angle = Math.PI/4;
         var x = (rectX * Math.cos(angle) + rectY * Math.sin(angle));
