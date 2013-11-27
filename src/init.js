@@ -44,6 +44,7 @@ var dragEvent;
 
 var bindEvents = function(self) {
     var mousemove = function(e) {
+        e.preventDefault();
         var deltaX = e.pageX - dragEvent.pageX;
         var deltaY = e.pageY - dragEvent.pageY;
         self.map.move(deltaX, deltaY);
@@ -51,6 +52,7 @@ var bindEvents = function(self) {
     }
 
     var mousewheel = function(e) {
+        e.preventDefault();
         var wheelDelta = e.wheelDelta || e.deltaY;
         if ((e.deltaY && e.deltaY > 0)
             || (e.wheelDeltaY && e.wheelDelta <= -120)) {
@@ -64,7 +66,7 @@ var bindEvents = function(self) {
     }
 
     self.container.addEventListener('mousedown', function(e) {
-        e.stopPropagation();
+        e.preventDefault();
         dragEvent = e;
         this.addEventListener('mousemove', mousemove);
     });
