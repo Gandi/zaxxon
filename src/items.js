@@ -3,6 +3,8 @@ var Items = (function() {
         return this.init(z);
     };
 
+    items.prototype.items = [];
+
     items.prototype.init = function(m) {
         this._parent = m;
         this.cols = m.cols;
@@ -29,7 +31,7 @@ var Items = (function() {
             for (var i = 0; i < this.container.childNodes.length; i++) {
                 var desc = this.container.childNodes[i].getAttribute('desc');
                 var coords = desc.split(' ');
-                if (coords[0] > x || (coords[0] == x && coords[1] < y)) {
+                if (coords[1] > y || (coords[1] == y && coords[0] < x)) {
                     this.container.insertBefore(g, this.container.childNodes[i]);
                     break;
                 }
@@ -43,17 +45,23 @@ var Items = (function() {
                 g.removeChild(g.firstChild);
             }
         }
+        if(!this.items[x]) this.items[x] = [];
+        this.items[x][y] = item;
         g.appendChild(item);
 
         var scale = rect.getBoundingClientRect().width/this._parent.zoomX / item.width.baseVal.value;
         var itemHeight = item.height.baseVal.value*scale;
         var rectHeight = rect.getBoundingClientRect().height/this._parent.zoomX;
         var angle = Math.PI/4;
-        var x = (rectX * Math.cos(angle) + rectY * Math.sin(angle));
-        var y = (rectX * Math.sin(angle) - rectY * Math.cos(angle)) / 2 - itemHeight + rectHeight/2;
+        var x = (rectY * Math.cos(angle) + rectX * Math.sin(angle));
+        var y = (rectY * Math.sin(angle) - rectX * Math.cos(angle)) / 2 - itemHeight + rectHeight/2;
         g.setAttributeNS(null, 'transform', 'translate(' + x + ' ' + y + ') scale(' + scale + ' ' + scale + ')');
 
         return this;
+    };
+
+    items.prototype.getItem = function(x,y) {
+        return this.items[x][y] || null;
     };
 
     return items;

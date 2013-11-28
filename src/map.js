@@ -97,6 +97,106 @@ var Map = (function() {
         updateContainer(this);
     };
 
+    map.prototype.connect = function(coords1, coords2) {
+        var grid = [];
+        for(var x = 0; x < this.cols; x++) {
+            grid[x] = [];
+			for(var y = 0; y < this.rows; y++) {
+				grid[x][y] = {
+                    f: 0,
+                    g: 0,
+                    coords: {x : x, y: y },
+                    visited: false,
+                    closed: (this.items.items[x] && this.items.items[x][y]) ? true : false,
+                };
+			}
+		}
+
+        var start = grid[coords1[0]][coords1[1]];
+        var end = grid[coords2[0]][coords2[1]];
+        
+        var path = pathfinder(grid, start, end);
+        console.log(path);
+        for (var i = 0; i < path.length; i++) {
+            var node = path[i];
+            var id = node.coords.y * this.cols + node.coords.x;
+            var rect = this.tiles.container.childNodes[id];
+            rect.setAttributeNS(null, 'fill', '#ff0000');
+        }
+    };
+
+    var pathfinder = function(grid, start, end) {
+        var openSet = [];
+        openSet.push(start);
+
+        while(openSet.length > 0) {
+		    var index = 0;
+            // f is estimated
+			for(var i = 0; i < openSet.length; i++) {
+				if(openSet[i].f < openSet[index].f) {
+                    index = i;
+                }
+			}
+			var currentNode = openSet[index];
+
+            if (currentNode.coords == end.coords) {
+				var path = [];
+	            var node = currentNode;
+				while(node.parent) {
+					path.push(node);
+					node = node.parent;
+				}
+                path.push(node);
+				return path.reverse();
+            }
+            openSet.splice(index,1);
+            currentNode.closed = true;
+
+            var neighbors = neighborNodes(grid, currentNode.coords);
+
+            for(var i = 0; i < neighbors.length; i++) {
+                var neighbor = neighbors[i];
+                
+                var gScore = currentNode.g + 1;
+
+                if(!neighbor.closed && (!neighbor.visited || gScore < neighbor.g)) {
+                    if (!neighbor.visited) {
+                        console.log(neighbor.coords, neighbor.closed);
+                        openSet.push(neighbor);
+                    }
+                    neighbor.visited = true;
+                    neighbor.parent = currentNode;
+                    neighbor.h = neighbor.h || heuristic(neighbor.coords, end.coords);
+                    neighbor.g = gScore;
+                    neighbor.f = neighbor.g + neighbor.h;
+                }
+            }
+        }
+
+        return [];
+    };
+
+    var heuristic = function(coords1, coords2) {
+		var d1 = Math.abs (coords2.x - coords1.x);
+		var d2 = Math.abs (coords2.y - coords1.y);
+		return d1 + d2;
+    }
+    
+    var neighborNodes = function(grid, coords) {
+        var nodes = [];
+        var x = coords.x;
+        var y = coords.y;
+        for(var i = x-1; i <= x+1; i++) {
+            for(var j = y-1; j <= y+1; j++) {
+                if ((i != x || j != y) && grid[i] && grid[i][j]) {
+                    console.log(grid[i][j]);
+                    nodes.push(grid[i][j]);
+                }
+            }
+        }
+        return nodes;
+    }
+
     var updateContainer = function(self) {
         self.container.setAttributeNS(null, 'transform', 'translate(' + self.containerX.toFixed(3) + ' ' + self.containerY.toFixed(3) +') scale(' + self.zoomX.toFixed(3) + ' ' + self.zoomY.toFixed(3) + ')');
     };
