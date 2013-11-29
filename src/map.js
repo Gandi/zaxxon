@@ -120,8 +120,7 @@ var Map = (function() {
 
         for (var i = 0; i < path.length; i++) {
             var node = path[i];
-            var id = node.coords.y * this.cols + node.coords.x;
-            var rect = this.tiles.container.childNodes[id];
+            var rect = this.tiles.get(node.coords.x, node.coords.y);
             rect.setAttributeNS(null, 'fill', '#ff0000');
         }
     };

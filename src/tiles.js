@@ -6,10 +6,7 @@ var Tiles = (function() {
     tiles.prototype.init = function(m) {
         this._parent = m;
         this.mainContainer = m._parent.container;
-        this.minZoom = m.minZoom;
-        this.maxZoom = m.maxZoom;
-        this.zoom = m.zoom;
-        this.spawn(this);
+        this.spawn();
         return this;
     };
 
@@ -36,6 +33,12 @@ var Tiles = (function() {
             }
         }
         this.container.setAttributeNS(null, 'transform', 'scale(1 0.5)');
+    };
+
+    tiles.prototype.get = function(x,y) {
+        var id = x * this._parent.cols + y;
+        var rect = this.container.childNodes[id];
+        return rect;
     };
 
     return tiles;

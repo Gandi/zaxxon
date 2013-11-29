@@ -19,8 +19,7 @@ var Items = (function() {
     };
 
     items.prototype.add = function(item, x, y) {
-        var id = y * this.cols + x;
-        var rect = this._parent.tiles.container.childNodes[id];
+        var rect = this._parent.tiles.get(x, y);
         var rectX = rect.x.baseVal.value;
         var rectY = rect.y.baseVal.value;
         var g = this.container.getElementsByClassName('items-' + x + '-' + y);
@@ -60,7 +59,7 @@ var Items = (function() {
         return this;
     };
 
-    items.prototype.getItem = function(x,y) {
+    items.prototype.get = function(x,y) {
         return this.items[x][y] || null;
     };
 
