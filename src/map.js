@@ -14,6 +14,7 @@ var Map = (function() {
         this.rows = z.config.tiles.rows;
         this.tiles = new Tiles(this);
         this.items = new Items(this);
+        this.diagonalPathfinder = z.config.diagonalPathfinder;
 
         var mainContainerWidth = this._parent.container.width.baseVal.value;
         var mainContainerHeight = this._parent.container.height.baseVal.value;
@@ -115,8 +116,8 @@ var Map = (function() {
         var start = grid[coords1[0]][coords1[1]];
         var end = grid[coords2[0]][coords2[1]];
         
-        var path = pathfinder(grid, start, end);
-        console.log(path);
+        var path = pathfinder(grid, start, end, this.diagonalPathfinder);
+
         for (var i = 0; i < path.length; i++) {
             var node = path[i];
             var id = node.coords.y * this.cols + node.coords.x;
@@ -125,7 +126,7 @@ var Map = (function() {
         }
     };
 
-    var pathfinder = function(grid, start, end) {
+    var pathfinder = function(grid, start, end, diagonal) {
         var openSet = [];
         openSet.push(start);
 
@@ -152,7 +153,7 @@ var Map = (function() {
             openSet.splice(index,1);
             currentNode.closed = true;
 
-            var neighbors = neighborNodes(grid, currentNode.coords);
+            var neighbors = neighborNodes(grid, currentNode.coords, diagonal);
 
             for(var i = 0; i < neighbors.length; i++) {
                 var neighbor = neighbors[i];
@@ -161,7 +162,6 @@ var Map = (function() {
 
                 if(!neighbor.closed && (!neighbor.visited || gScore < neighbor.g)) {
                     if (!neighbor.visited) {
-                        console.log(neighbor.coords, neighbor.closed);
                         openSet.push(neighbor);
                     }
                     neighbor.visited = true;
@@ -182,14 +182,15 @@ var Map = (function() {
 		return d1 + d2;
     }
     
-    var neighborNodes = function(grid, coords) {
+    var neighborNodes = function(grid, coords, diagonal) {
         var nodes = [];
         var x = coords.x;
         var y = coords.y;
         for(var i = x-1; i <= x+1; i++) {
             for(var j = y-1; j <= y+1; j++) {
-                if ((i != x || j != y) && grid[i] && grid[i][j]) {
-                    console.log(grid[i][j]);
+                if ((i != x || j != y)
+                    && (diagonal || i == x || j == y)
+                    && grid[i] && grid[i][j]) {
                     nodes.push(grid[i][j]);
                 }
             }

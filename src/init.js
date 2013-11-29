@@ -15,7 +15,8 @@ zaxxon.prototype.config = {
     },
     zoom: 6,
     minZoom: 1,
-    maxZoom: 15
+    maxZoom: 10,
+    diagonalPathfinder: 0
 };
 
 zaxxon.prototype.init = function(userConfig) {
