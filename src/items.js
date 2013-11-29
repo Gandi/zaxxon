@@ -30,7 +30,7 @@ var Items = (function() {
             for (var i = 0; i < this.container.childNodes.length; i++) {
                 var desc = this.container.childNodes[i].getAttribute('desc');
                 var coords = desc.split(' ');
-                if (coords[1] < y || (coords[1] == y && coords[0] > x)) {
+                if (coords[1] > y || (coords[1] == y && coords[0] < x)) {
                     this.container.insertBefore(g, this.container.childNodes[i]);
                     break;
                 }
@@ -46,6 +46,7 @@ var Items = (function() {
         }
         if(!this.items[x]) this.items[x] = [];
         this.items[x][y] = item;
+
         g.appendChild(item);
 
         var scale = rect.getBoundingClientRect().width/this._parent.zoomX / item.width.baseVal.value;

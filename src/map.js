@@ -98,7 +98,63 @@ var Map = (function() {
         updateContainer(this);
     };
 
-    map.prototype.connect = function(coords1, coords2) {
+    map.prototype.connect = function(coords1, coords2, params) {
+        var path = this.pathfinder(coords1, coords2);
+
+        var tileSize = this.tiles.size;
+        var size = params.size || 10;
+
+        var item = document.createElementNS (xmlns, 'rect');
+        item.setAttributeNS(null, 'fill', params.fill || '#333333');
+        item.setAttributeNS(null, 'stroke', params.stroke || '#000000');
+        
+        for (var i = 0; i < path.length; i++) {
+            var node = path[i];
+            var x = node.coords.x;
+            var y = node.coords.y;
+            var clone = item.cloneNode();
+            var prevNode = path[i+1] || undefined;
+            var nextNode = path[i-1] || undefined;
+            var width = tileSize;
+            var height = tileSize;
+            if(!prevNode) {
+                if(nextNode.coords.x == x-1) {
+                    height = 20;
+                } else if (nextNode.coords.x == x+1) {
+                    height = 20;
+                } else if(nextNode.coords.y == y-1) {
+                    width = 20;
+                } else if (nextNode.coords.y == y+1) {
+                    width = 20;
+                }
+            } else if (!nextNode) {
+                if(prevNode.coords.x == x-1) {
+                    height = 20;
+                } else if (prevNode.coords.x == x+1) {
+                    height = 20;
+                } else if(prevNode.coords.y == y-1) {
+                    width = 20;
+                } else if (prevNode.coords.y == y+1) {
+                    width = 20;
+                }
+            } else {
+                if(prevNode.coords.x == x-1) {
+                    height = 20;
+                } else if (prevNode.coords.x == x+1) {
+                    height = 20;
+                } else if(prevNode.coords.y == y-1) {
+                    width = 20;
+                } else if (prevNode.coords.y == y+1) {
+                    width = 20;
+                }
+            }
+            clone.setAttributeNS(null, 'width', width);
+            clone.setAttributeNS(null, 'height', height);
+            this.tiles.addLayer(clone, node.coords.x, node.coords.y);
+        }
+    };
+
+    map.prototype.pathfinder = function(coords1, coords2, diagonal) {
         var grid = [];
         for(var x = 0; x < this.cols; x++) {
             grid[x] = [];
@@ -115,17 +171,9 @@ var Map = (function() {
 
         var start = grid[coords1[0]][coords1[1]];
         var end = grid[coords2[0]][coords2[1]];
-        
-        var path = pathfinder(grid, start, end, this.diagonalPathfinder);
 
-        for (var i = 0; i < path.length; i++) {
-            var node = path[i];
-            var rect = this.tiles.get(node.coords.x, node.coords.y);
-            rect.setAttributeNS(null, 'fill', '#ff0000');
-        }
-    };
+        diagonal = diagonal || this.diagonalPathfinder;
 
-    var pathfinder = function(grid, start, end, diagonal) {
         var openSet = [];
         openSet.push(start);
 
