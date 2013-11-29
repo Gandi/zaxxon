@@ -159,7 +159,7 @@ var Map = (function() {
                 
                 var gScore = currentNode.g + 1;
 
-                if(!neighbor.closed && (!neighbor.visited || gScore < neighbor.g)) {
+                if((!neighbor.closed || neighbor.coords == end.coords) && (!neighbor.visited || gScore < neighbor.g)) {
                     if (!neighbor.visited) {
                         openSet.push(neighbor);
                     }
