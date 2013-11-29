@@ -101,57 +101,80 @@ var Map = (function() {
     map.prototype.connect = function(coords1, coords2, params) {
         var path = this.pathfinder(coords1, coords2);
 
+        params = params || {};
+
         var tileSize = this.tiles.size;
         var size = params.size || 10;
 
-        var item = document.createElementNS (xmlns, 'rect');
-        item.setAttributeNS(null, 'fill', params.fill || '#333333');
-        item.setAttributeNS(null, 'stroke', params.stroke || '#000000');
-        
+        var layer = [];
         for (var i = 0; i < path.length; i++) {
             var node = path[i];
             var x = node.coords.x;
             var y = node.coords.y;
-            var clone = item.cloneNode();
             var prevNode = path[i+1] || undefined;
             var nextNode = path[i-1] || undefined;
+            var type = 'rect';
+            var d = "M 0 0";
             var width = tileSize;
             var height = tileSize;
             if(!prevNode) {
                 if(nextNode.coords.x == x-1) {
-                    height = 20;
+                    height = size;
                 } else if (nextNode.coords.x == x+1) {
                     height = 20;
                 } else if(nextNode.coords.y == y-1) {
-                    width = 20;
+                    width = size;
                 } else if (nextNode.coords.y == y+1) {
-                    width = 20;
+                    width = size;
                 }
             } else if (!nextNode) {
                 if(prevNode.coords.x == x-1) {
-                    height = 20;
+                    height = size;
                 } else if (prevNode.coords.x == x+1) {
-                    height = 20;
+                    height = size;
                 } else if(prevNode.coords.y == y-1) {
-                    width = 20;
+                    width = size;
                 } else if (prevNode.coords.y == y+1) {
-                    width = 20;
+                    width = size;
                 }
             } else {
-                if(prevNode.coords.x == x-1) {
-                    height = 20;
+                if (prevNode.coords.x == x-1 && nextNode.coords.y == y-1) {
+                    type = 'path';
+                } else if (prevNode.coords.x == x-1 && nextNode.coords.y == y+1) {
+                    type = 'path';
+                } else if (prevNode.coords.x == x+1 && nextNode.coords.y == y-1) {
+                    type = 'path';
+                } else if (prevNode.coords.x == x+1 && nextNode.coords.y == y+1) {
+                    type = 'path';
+                } else if (prevNode.coords.y == y-1 && nextNode.coords.x == x-1) {
+                    type = 'path';
+                } else if (prevNode.coords.y == y-1 && nextNode.coords.x == x+1) {
+                    type = 'path';
+                    d = "M 10 10 H 90 V 90 H 10 L 10 10";
+                } else if (prevNode.coords.y == y+1 && nextNode.coords.x == x-1) {
+                    type = 'path';
+                } else if (prevNode.coords.y == y+1 && nextNode.coords.x == x+1) {
+                    type = 'path';
+                } else if (prevNode.coords.x == x-1) {
+                    height = size;
                 } else if (prevNode.coords.x == x+1) {
-                    height = 20;
-                } else if(prevNode.coords.y == y-1) {
-                    width = 20;
+                    height = size;
+                } else if (prevNode.coords.y == y-1) {
+                    width = size;
                 } else if (prevNode.coords.y == y+1) {
-                    width = 20;
+                    width = size;
                 }
             }
-            clone.setAttributeNS(null, 'width', width);
-            clone.setAttributeNS(null, 'height', height);
-            this.tiles.addLayer(clone, node.coords.x, node.coords.y);
+            var item = document.createElementNS (xmlns, type)
+            if (type == 'rect') {
+                item.setAttributeNS(null, 'width', width);
+                item.setAttributeNS(null, 'height', height);
+            } else {
+                item.setAttributeNS(null, 'd', d);
+            }
+            layer.push({ item: item, x: node.coords.x, y: node.coords.y });
         }
+        this.tiles.addLayer(layer);
     };
 
     map.prototype.pathfinder = function(coords1, coords2, diagonal) {

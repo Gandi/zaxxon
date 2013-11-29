@@ -40,11 +40,24 @@ var Tiles = (function() {
         this.container.setAttributeNS(null, 'transform', 'scale(1 0.5)');
     };
 
-    tiles.prototype.addLayer = function(item, x, y) {
-        item.setAttributeNS(null, 'x', this.size*x + (this.size - item.width.baseVal.value)/2);
-        item.setAttributeNS(null, 'y', this.size*y + (this.size - item.height.baseVal.value)/2);
-        item.setAttributeNS(null, 'transform', 'rotate(-45 ' + this.rotationCenter + ' ' + this.rotationCenter + ')');
-        this.containerLayers.appendChild(item);
+    tiles.prototype.addLayer = function(layer, x, y, layerId) {
+        var layerContainer = document.createElementNS (xmlns, "g");
+        for (var i = 0; i < layer.length; i++) {
+            var item = layer[i].item;
+            var x = layer[i].x;
+            var y = layer[i].y;
+            var decalX = 0;
+            var decalY = 0;
+            if (item.width) {
+                decalX = (this.size - item.width.baseVal.value)/2
+                decalY = (this.size - item.height.baseVal.value)/2
+            }
+            item.setAttributeNS(null, 'x', this.size*x + decalX);
+            item.setAttributeNS(null, 'y', this.size*y + decalY);
+            item.setAttributeNS(null, 'transform', 'rotate(-45 ' + this.rotationCenter + ' ' + this.rotationCenter + ')');
+            layerContainer.appendChild(item);
+        }
+        this.containerLayers.appendChild(layerContainer);
     };
 
     tiles.prototype.get = function(x,y) {
