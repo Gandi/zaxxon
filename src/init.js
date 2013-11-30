@@ -41,6 +41,14 @@ zaxxon.prototype.createSVG = function() {
     c.appendChild(this.container);
 };
 
+zaxxon.prototype.addItem = function(item, x, y) {
+    return this.map.items.add(item, x, y);
+};
+
+zaxxon.prototype.connect = function(coords1, coords2, userParams) {
+    return this.map.connect(coords1, coords2, userParams);
+};
+
 var dragEvent;
 
 var bindEvents = function(self) {
