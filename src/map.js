@@ -98,81 +98,77 @@ var Map = (function() {
         updateContainer(this);
     };
 
-    map.prototype.connect = function(coords1, coords2, params) {
+    map.prototype.connect = function(coords1, coords2, userParams) {
         var path = this.pathfinder(coords1, coords2);
 
-        params = params || {};
+        var params = {
+            size: 50,
+            color: '#333333',
+            particles: {
+                color: 'yellow',
+                size: 10,
+                speed: 10,
+                quantity: 80
+            },
+        };
+
+        for (var attrname in userParams) {
+            params = userParams[attrname];
+        }
 
         var tileSize = this.tiles.size;
-        var size = params.size || 10;
+        var size = params.size;
+        var color = params.color;
+        var particleQuantity = params.particles.quantity;
+        var particleColor = params.particles.color;
+        var particleSize = params.particles.size;
+        var particleSpeed = params.particles.speed;
 
         var layer = [];
+
+        var points = [];
+
+        var item = document.createElementNS(xmlns, 'polyline');
+        var angle = Math.PI/4;
+        var d;
         for (var i = 0; i < path.length; i++) {
             var node = path[i];
-            var x = node.coords.x;
-            var y = node.coords.y;
-            var prevNode = path[i+1] || undefined;
-            var nextNode = path[i-1] || undefined;
-            var type = 'rect';
-            var d = "M 0 0";
-            var width = tileSize;
-            var height = tileSize;
-            if(!prevNode) {
-                if(nextNode.coords.x == x-1) {
-                    height = size;
-                } else if (nextNode.coords.x == x+1) {
-                    height = 20;
-                } else if(nextNode.coords.y == y-1) {
-                    width = size;
-                } else if (nextNode.coords.y == y+1) {
-                    width = size;
-                }
-            } else if (!nextNode) {
-                if(prevNode.coords.x == x-1) {
-                    height = size;
-                } else if (prevNode.coords.x == x+1) {
-                    height = size;
-                } else if(prevNode.coords.y == y-1) {
-                    width = size;
-                } else if (prevNode.coords.y == y+1) {
-                    width = size;
-                }
+            var x = tileSize*node.coords.x + tileSize/2;
+            var y = tileSize*node.coords.y + tileSize/2;
+            points.push(x + ' ' + y);
+            
+            var pathX = (y * Math.cos(angle) + x * Math.sin(angle));
+            var pathY = (y * Math.sin(angle) - x * Math.cos(angle));
+            if (i == 0) {
+                d = 'M ' + pathX + ' ' + pathY;
             } else {
-                if (prevNode.coords.x == x-1 && nextNode.coords.y == y-1) {
-                    type = 'path';
-                } else if (prevNode.coords.x == x-1 && nextNode.coords.y == y+1) {
-                    type = 'path';
-                } else if (prevNode.coords.x == x+1 && nextNode.coords.y == y-1) {
-                    type = 'path';
-                } else if (prevNode.coords.x == x+1 && nextNode.coords.y == y+1) {
-                    type = 'path';
-                } else if (prevNode.coords.y == y-1 && nextNode.coords.x == x-1) {
-                    type = 'path';
-                } else if (prevNode.coords.y == y-1 && nextNode.coords.x == x+1) {
-                    type = 'path';
-                    d = "M 10 10 H 90 V 90 H 10 L 10 10";
-                } else if (prevNode.coords.y == y+1 && nextNode.coords.x == x-1) {
-                    type = 'path';
-                } else if (prevNode.coords.y == y+1 && nextNode.coords.x == x+1) {
-                    type = 'path';
-                } else if (prevNode.coords.x == x-1) {
-                    height = size;
-                } else if (prevNode.coords.x == x+1) {
-                    height = size;
-                } else if (prevNode.coords.y == y-1) {
-                    width = size;
-                } else if (prevNode.coords.y == y+1) {
-                    width = size;
-                }
+                d += ' L ' + pathX + ' ' + pathY;
             }
-            var item = document.createElementNS (xmlns, type)
-            if (type == 'rect') {
-                item.setAttributeNS(null, 'width', width);
-                item.setAttributeNS(null, 'height', height);
-            } else {
-                item.setAttributeNS(null, 'd', d);
-            }
-            layer.push({ item: item, x: node.coords.x, y: node.coords.y });
+        }
+        item.setAttributeNS(null,'points', points.join(' '));
+        item.setAttributeNS(null,'fill', 'none');
+        item.setAttributeNS(null,'stroke', color);
+        item.setAttributeNS(null,'stroke-width', size);
+        item.setAttributeNS(null, 'transform', 'rotate(-45 0 0)');
+        layer.push(item);
+
+        for (var i = 0; i < particleQuantity; i++) {
+            var circle = document.createElementNS(xmlns, 'circle');
+            var circleX = tileSize*path[0].coords.x + tileSize/2;
+            var circleY = tileSize*path[0].coords.y + tileSize/2;
+            circle.setAttributeNS(null, 'cx', 0);
+            circle.setAttributeNS(null, 'cy', 0);
+            circle.setAttributeNS(null, 'r', particleSize);
+            circle.setAttributeNS(null, 'fill', particleColor);
+            circle.setAttributeNS(null, 'transform', 'rotate(-45 0 0)');
+
+            var anim = document.createElementNS(xmlns, 'animateMotion');
+            anim.setAttributeNS(null, 'dur', Math.ceil(Math.random()*particleSpeed));
+            anim.setAttributeNS(null, 'begin', Math.ceil(Math.random()*5));
+            anim.setAttributeNS(null, 'repeatCount', 'indefinite');
+            anim.setAttributeNS(null, 'path', d);
+            circle.appendChild(anim);
+            layer.push(circle);
         }
         this.tiles.addLayer(layer);
     };
