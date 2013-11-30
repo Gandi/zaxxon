@@ -108,7 +108,7 @@ var Map = (function() {
                 color: 'yellow',
                 size: 10,
                 speed: 10,
-                quantity: 80
+                quantity: 20
             },
         };
 
@@ -130,7 +130,8 @@ var Map = (function() {
 
         var item = document.createElementNS(xmlns, 'polyline');
         var angle = Math.PI/4;
-        var d;
+        var d = [];
+
         for (var i = 0; i < path.length; i++) {
             var node = path[i];
             var x = tileSize*node.coords.x + tileSize/2;
@@ -140,11 +141,27 @@ var Map = (function() {
             var pathX = (y * Math.cos(angle) + x * Math.sin(angle));
             var pathY = (y * Math.sin(angle) - x * Math.cos(angle));
             if (i == 0) {
-                d = 'M ' + pathX + ' ' + pathY;
+                d[0] = 'M ' + pathX + ' ' + pathY;
             } else {
-                d += ' L ' + pathX + ' ' + pathY;
+                d[0] += ' L ' + pathX + ' ' + pathY;
             }
         }
+
+        var revert = path.reverse();
+        for (var i = 0; i < revert.length; i++) {
+            var node = path[i];
+            var x = tileSize*node.coords.x + tileSize/2;
+            var y = tileSize*node.coords.y + tileSize/2;
+            var pathX = (y * Math.cos(angle) + x * Math.sin(angle));
+            var pathY = (y * Math.sin(angle) - x * Math.cos(angle));
+            if (i == 0) {
+                d[1] = 'M ' + pathX + ' ' + pathY;
+            } else {
+                d[1] += ' L ' + pathX + ' ' + pathY;
+            }
+        }
+        console.log(d);
+
         item.setAttributeNS(null,'points', points.join(' '));
         item.setAttributeNS(null,'fill', 'none');
         item.setAttributeNS(null,'stroke', color);
@@ -164,9 +181,9 @@ var Map = (function() {
 
             var anim = document.createElementNS(xmlns, 'animateMotion');
             anim.setAttributeNS(null, 'dur', Math.ceil(Math.random()*particleSpeed));
-            anim.setAttributeNS(null, 'begin', Math.ceil(Math.random()*5));
+            anim.setAttributeNS(null, 'begin', Math.ceil(Math.random()*particleQuantity/20));
             anim.setAttributeNS(null, 'repeatCount', 'indefinite');
-            anim.setAttributeNS(null, 'path', d);
+            anim.setAttributeNS(null, 'path', d[Math.round(Math.random())]);
             circle.appendChild(anim);
             layer.push(circle);
         }
