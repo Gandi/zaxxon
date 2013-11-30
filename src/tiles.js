@@ -15,7 +15,7 @@ var Tiles = (function() {
 
     tiles.prototype.spawn = function() {
         this.container = document.createElementNS (xmlns, "g");
-        this.container.className = 'zaxxon-tiles';
+        this.container.setAttribute('class', 'zaxxon-tiles');
         this._parent.container.appendChild(this.container);
 
         this.containerTiles = document.createElementNS (xmlns, "g");
