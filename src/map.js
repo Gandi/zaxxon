@@ -160,7 +160,6 @@ var Map = (function() {
                 d[1] += ' L ' + pathX + ' ' + pathY;
             }
         }
-        console.log(d);
 
         item.setAttributeNS(null,'points', points.join(' '));
         item.setAttributeNS(null,'fill', 'none');
