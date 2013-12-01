@@ -104,25 +104,23 @@ var Map = (function() {
         var params = {
             size: 50,
             color: '#333333',
-            particles: {
-                color: 'yellow',
-                size: 10,
-                speed: 10,
-                quantity: 20
-            },
+            particlesColor: 'yellow',
+            particlesSize: 10,
+            particlesSpeed: 10,
+            particlesQuantity: 20
         };
 
         for (var attrname in userParams) {
-            params = userParams[attrname];
+            params[attrname] = userParams[attrname];
         }
 
         var tileSize = this.tiles.size;
         var size = params.size;
         var color = params.color;
-        var particleQuantity = params.particles.quantity;
-        var particleColor = params.particles.color;
-        var particleSize = params.particles.size;
-        var particleSpeed = params.particles.speed;
+        var particleQuantity = params.particlesQuantity;
+        var particleColor = params.particlesColor;
+        var particleSize = params.particlesSize;
+        var particleSpeed = params.particlesSpeed;
 
         var layer = [];
 

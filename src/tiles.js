@@ -15,13 +15,15 @@ var Tiles = (function() {
 
     tiles.prototype.spawn = function() {
         this.container = document.createElementNS (xmlns, "g");
-        this.container.setAttribute('class', 'zaxxon-tiles');
+        this.container.setAttribute('class', 'zaxxon-ground');
         this._parent.container.appendChild(this.container);
 
         this.containerTiles = document.createElementNS (xmlns, "g");
+        this.containerTiles.setAttribute('class', 'zaxxon-tiles');
         this.container.appendChild(this.containerTiles);
 
         this.containerLayers = document.createElementNS (xmlns, "g");
+        this.containerLayers.setAttribute('class', 'zaxxon-layers');
         this.container.appendChild(this.containerLayers);
 
         for(var i = 0; i < this._parent.rows; i++) {
