@@ -7,7 +7,6 @@
     "speed",
     "test",
     "*.md",
-    "package.json",
     "bower.json"
   ],
   "devDependencies": {

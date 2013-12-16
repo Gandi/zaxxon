@@ -7,11 +7,13 @@ zaxxon
 This plugin requires Grunt `>=0.4.1`
 
 ```shell
-npm install grunt-contrib-uglify
-npm install grunt-contrib-watch
-npm install grunt-smash
+npm install
+bower install
 grunt build
 ```
+"npm install" will install grunt plugins.
+"bower install" will install qunit framework test.
+
 
 ## Using Zaxxon
 
