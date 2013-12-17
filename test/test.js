@@ -1,5 +1,5 @@
 test('config', function() {
-    var mymap = new Zaxxon({ container: 'config', tiles: { cols: 20, rows: 20 }, zoom: 11, maxZoom: 20 });
+    var mymap = new Zaxxon({ container: 'config', tiles: { cols: 20, rows: 20 }, zoom: 15, maxZoom: 20 });
     var el = document.getElementById('config');
 
     // Svg is added
@@ -58,7 +58,7 @@ test('connect', function() {
     mymap.connect([x1,y1], [0,1], { color: 'blue', particlesColor: '#ffffff', particlesQuantity: 5 });
 
     var layer = el.getElementsByClassName('zaxxon-layers')[0].firstChild;
-    console.log(el.getElementsByClassName('zaxxon-layers'));
+
     // Check color
     equal(layer.firstChild.getAttribute('stroke'), 'blue');
 

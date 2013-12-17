@@ -7,7 +7,8 @@ var Tiles = (function() {
         this._parent = m;
         this.mainContainer = m._parent.container;
         var mainContainerWidth = this.mainContainer.width.baseVal.value;
-        this.size = mainContainerWidth/5;
+        // Arbitrary size
+        this.size = 100;
         this.rotationCenter = 0;
         this.spawn();
         return this;
@@ -35,6 +36,7 @@ var Tiles = (function() {
                 rect.setAttributeNS(null, 'height', this.size);
                 rect.setAttributeNS(null, 'fill', '#aaccee');
                 rect.setAttributeNS(null, 'stroke', '#003355');
+                rect.setAttributeNS(null, 'stroke-width', '1');
                 rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + this.rotationCenter + ' ' + this.rotationCenter + ')');
                 this.containerTiles.appendChild(rect);
             }

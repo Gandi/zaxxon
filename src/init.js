@@ -1,5 +1,4 @@
 var zaxxon = function(userConfig) {
-
     return this.init(userConfig);
 };
 
@@ -7,25 +6,32 @@ var xmlns = "http://www.w3.org/2000/svg";
 
 zaxxon.prototype.version = '0.0.2'
 
-zaxxon.prototype.config = {
+zaxxon.prototype.defaultConfig = {
     container: 'zaxxon',
     tiles: {
         cols: 15,
         rows: 15
     },
-    zoom: 6,
-    minZoom: 1,
-    maxZoom: 10,
+    zoomRatio: 10,
+    zoom: 5,
+    minZoom: 5,
+    maxZoom: 15,
     diagonalPathfinder: 0
 };
 
 zaxxon.prototype.init = function(userConfig) {
+    this.config = {};
+    for (var attrname in this.defaultConfig) {
+        this.config[attrname] = this.defaultConfig[attrname];
+    }
     for (var attrname in userConfig) {
         this.config[attrname] = userConfig[attrname];
     }
 
     this.createSVG();
-    
+
+    console.log(this.config.zoom);
+
     this.map = new Map(this);
 
     bindEvents(this);

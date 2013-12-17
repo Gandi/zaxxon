@@ -2,14 +2,15 @@ var Map = (function() {
     var map = function(z) {
         return this.init(z);
     };
-
+    
     map.prototype.init = function(z) {
         this._parent = z;
         this.createG();
         this.parentContainer = z.container;
+        this.zoomRatio = z.config.zoomRatio;
         this.zoom = z.config.zoom;
-        this.zoomX = this.zoom/10;
-        this.zoomY = this.zoom/10;
+        this.zoomX = this.zoom / this.zoomRatio;
+        this.zoomY = this.zoom / this.zoomRatio;
         this.cols = z.config.tiles.cols;
         this.rows = z.config.tiles.rows;
         this.tiles = new Tiles(this);
@@ -25,7 +26,6 @@ var Map = (function() {
         this.containerX = mainContainerWidth/2 - this.containerWidth/2;
 
         this.containerY = mainContainerHeight/2;
-
         updateContainer(this);
 
         return this;
@@ -58,7 +58,7 @@ var Map = (function() {
     map.prototype.zoomto = function(zoom) {
         var oldContainerTilesWidth = this.containerWidth;
         this.zoom = zoom;
-        this.zoomX = this.zoomY = this.zoom/10;
+        this.zoomX = this.zoomY = this.zoom / this.zoomRatio;
 
         var mainContainerWidth = this._parent.container.width.baseVal.value;
         var mainContainerHeight = this._parent.container.height.baseVal.value;
