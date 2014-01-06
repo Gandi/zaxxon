@@ -65,6 +65,14 @@ zaxxon.prototype.refresh = function(items) {
     return this.map.refresh(items);
 };
 
+zaxxon.prototype.listen = function(name, func) {
+    this.container.addEventListener(name, func);
+};
+
+zaxxon.prototype.trigger = function(e) {
+    this.container.dispatchEvent(e);
+};
+
 var dragEvent;
 
 var bindEvents = function(self) {

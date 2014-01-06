@@ -13,6 +13,7 @@ var Item = (function() {
         this.spawn();
         this.bindEvents()
         this.add(this.item);
+
         return this;
     };
 
@@ -49,21 +50,8 @@ var Item = (function() {
     };
 
     item.prototype.bindEvents = function(g) {
-        var self = this;
-        this.container.addEventListener('mousedown', function(e) {
-            e.stopPropagation();
-            dragEvent = e;
-            this.addEventListener('mousemove', mousemove);
-            console.log('ok');
-        });
-
-        var mousemove = function(e) {
-            e.preventDefault();
-            var deltaX = e.pageX - dragEvent.pageX;
-            var deltaY = e.pageY - dragEvent.pageY;
-//            self.move(deltaX, deltaY);
-            dragEvent = e;
-        }
+        this.bindDragAndDrop();
+        this.bindMouseOver();
     };
 
     item.prototype.add = function(item) {
@@ -78,6 +66,37 @@ var Item = (function() {
     item.prototype.drop = function() {
         while (this.container.firstChild) {
             this.container.removeChild(this.container.firstChild);
+        }
+    };
+
+    item.prototype.bindMouseOver = function() {
+        var that = this;
+        this.container.addEventListener('mouseover', function(e) {
+            that.mouseover();
+        });
+    };
+
+    item.prototype.mouseover = function() {
+        var event = document.createEvent('CustomEvent');
+        event.initCustomEvent('itemmouseover', true, true, { element: this.item, item : this, x: this.x, y: this.y });
+        this._parent.trigger(event);
+    }
+
+    item.prototype.bindDragAndDrop = function() {
+        var self = this;
+        this.container.addEventListener('mousedown', function(e) {
+            e.stopPropagation();
+            dragEvent = e;
+            this.addEventListener('mousemove', mousemove);
+            console.log('ok');
+        });
+
+        var mousemove = function(e) {
+            e.preventDefault();
+            var deltaX = e.pageX - dragEvent.pageX;
+            var deltaY = e.pageY - dragEvent.pageY;
+//            self.move(deltaX, deltaY);
+            dragEvent = e;
         }
     };
 

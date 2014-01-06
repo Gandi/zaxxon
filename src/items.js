@@ -14,6 +14,10 @@ var Items = (function() {
         return this;
     };
 
+    items.prototype.trigger = function(e) {
+        this._parent.trigger(e);
+    };
+
     items.prototype.spawn = function() {
         this.container = document.createElementNS (xmlns, "g");
         this.container.id = 'zaxxon-items';
@@ -27,7 +31,7 @@ var Items = (function() {
         } else {
             this.items[x][y].replace(item);
         }
-        return this;
+        return this.items[x][y];
     };
 
     items.prototype.addCollection = function(items) {

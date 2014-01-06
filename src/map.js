@@ -30,6 +30,10 @@ var Map = (function() {
         return this;
     };
 
+    map.prototype.trigger = function(e) {
+        this._parent.trigger(e);
+    };
+
     map.prototype.createG = function() {
         this.container = document.createElementNS (xmlns, "g");
         this._parent.container.appendChild(this.container);
