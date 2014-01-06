@@ -20,10 +20,8 @@ zaxxon.prototype.defaultConfig = {
 };
 
 zaxxon.prototype.init = function(userConfig) {
-    this.config = {};
-    for (var attrname in this.defaultConfig) {
-        this.config[attrname] = this.defaultConfig[attrname];
-    }
+    this.config = clone(this.defaultConfig);
+
     for (var attrname in userConfig) {
         this.config[attrname] = userConfig[attrname];
     }
@@ -116,3 +114,13 @@ var bindEvents = function(self) {
     self.container.addEventListener('mousewheel', mousewheel);
     self.container.addEventListener('wheel', mousewheel);
 };
+
+var clone = function(obj) {
+    var target = {};
+    for (var i in obj) {
+        if (obj.hasOwnProperty(i)) {
+            target[i] = obj[i];
+        }
+    }
+    return target;
+}
