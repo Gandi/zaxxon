@@ -4,7 +4,7 @@ var zaxxon = function(userConfig) {
 
 var xmlns = "http://www.w3.org/2000/svg";
 
-zaxxon.prototype.version = '0.0.2'
+zaxxon.prototype.version = '0.0.3'
 
 zaxxon.prototype.defaultConfig = {
     container: 'zaxxon',
