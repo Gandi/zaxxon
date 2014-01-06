@@ -61,6 +61,10 @@ zaxxon.prototype.connect = function(coords1, coords2, userParams) {
     return this.map.connect(coords1, coords2, userParams);
 };
 
+zaxxon.prototype.clear = function() {
+    return this.map.clear();
+};
+
 zaxxon.prototype.refresh = function(items) {
     return this.map.refresh(items);
 };
