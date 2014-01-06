@@ -102,7 +102,6 @@ var Item = (function() {
             e.stopPropagation();
             dragEvent = e;
             this.addEventListener('mousemove', mousemove);
-            console.log('ok');
         });
 
         var mousemove = function(e) {
