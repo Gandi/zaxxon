@@ -16,7 +16,6 @@ var Map = (function() {
         this.tiles = new Tiles(this);
         this.items = new Items(this);
         this.diagonalPathfinder = z.config.diagonalPathfinder;
-
         var mainContainerWidth = this._parent.container.width.baseVal.value;
         var mainContainerHeight = this._parent.container.height.baseVal.value;
 
@@ -97,6 +96,11 @@ var Map = (function() {
         }
         updateContainer(this);
     };
+
+    map.prototype.refresh = function(items) {
+        this.items.clear();
+        this.items.addCollection(items);
+    }
 
     map.prototype.connect = function(coords1, coords2, userParams) {
         var path = this.pathfinder(coords1, coords2);

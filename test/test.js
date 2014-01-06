@@ -1,4 +1,5 @@
 test('config', function() {
+    console.log('config');
     var mymap = new Zaxxon({ container: 'config', tiles: { cols: 20, rows: 20 }, zoom: 15, maxZoom: 20 });
     var el = document.getElementById('config');
 
@@ -16,7 +17,8 @@ test('config', function() {
 });
 
 test('addItem', function() {
-    var mymap = new Zaxxon({ container: 'addItem', tiles: { cols: 15, rows: 15 } });
+    console.log('addItem');
+    var mymap = new Zaxxon({ container: 'addItem', tiles: { cols: 21, rows: 21 } });
     var el = document.getElementById('addItem');
 
     // Oversized item
@@ -42,6 +44,7 @@ test('addItem', function() {
 });
 
 test('dropItem', function() {
+    console.log('dropItem');
     var mymap = new Zaxxon({ container: 'dropItem', tiles: { cols: 15, rows: 15 } });
     var el = document.getElementById('dropItem');
 
@@ -63,6 +66,7 @@ test('dropItem', function() {
 });
 
 test('connect', function() {
+    console.log('connect');
     var mymap = new Zaxxon({ container: 'connect', tiles: { cols: 5, rows: 5 } });
     var el = document.getElementById('connect');
 
@@ -89,4 +93,48 @@ test('connect', function() {
     // Check color
     var circle = layer.childNodes[1];
     equal(circle.getAttribute('fill'), '#ffffff');
+});
+
+test('refresh', function() {
+    console.log('refresh');
+    var mymap = new Zaxxon({ container: 'refresh', tiles: { cols: 30, rows: 15 } });
+    var el = document.getElementById('refresh');
+    ok(1);
+    // Oversized item
+    var svg1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    svg1.setAttributeNS(null, 'width', '200');
+    svg1.setAttributeNS(null, 'height', '300');
+    svg1.setAttributeNS(null, 'fill', '#FF0000');
+    var x1 = 2;
+    var y1 = 4;
+    mymap.addItem(svg1, x1, y1);
+
+    var svg2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    svg2.setAttributeNS(null, 'width', '2');
+    svg2.setAttributeNS(null, 'height', '3');
+    svg2.setAttributeNS(null, 'fill', '#FF0000');
+    var x2 = 10;
+    var y2 = 8;
+    mymap.addItem(svg2, x2, y2);
+
+    ok(el.getElementsByClassName('items-' + x1 + '-' + y1).length);
+    ok(el.getElementsByClassName('items-' + x2 + '-' + y2).length);
+
+    // Refresh with new position, same elements
+    var x3, y3, x4, y4;
+    x3 = y3 = 0;
+    x4 = y4 = 4;
+    mymap.refresh([
+            { element: svg1, x: x3, y: x3 },
+            { element: svg2, x: x4, y: x4 },
+        ]);
+
+
+    //Old not present
+    ok(!el.getElementsByClassName('items-' + x1 + '-' + y1)[0].childNodes.length);
+    ok(!el.getElementsByClassName('items-' + x2 + '-' + y2)[0].childNodes.length);
+
+    // New are present
+    ok(el.getElementsByClassName('items-' + x3 + '-' + y3).length);
+    ok(el.getElementsByClassName('items-' + x4 + '-' + y4).length);
 });

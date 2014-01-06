@@ -49,12 +49,20 @@ zaxxon.prototype.addItem = function(item, x, y) {
     return this.map.items.add(item, x, y);
 };
 
+zaxxon.prototype.addItemCollection = function(items) {
+    return this.map.items.addCollection(items);
+};
+
 zaxxon.prototype.dropItem = function(x, y) {
     return this.map.items.drop(x, y);
 };
 
 zaxxon.prototype.connect = function(coords1, coords2, userParams) {
     return this.map.connect(coords1, coords2, userParams);
+};
+
+zaxxon.prototype.refresh = function(items) {
+    return this.map.refresh(items);
 };
 
 var dragEvent;

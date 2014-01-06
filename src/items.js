@@ -5,11 +5,11 @@ var Items = (function() {
 
     var dragEvent;
 
-    items.prototype.items = [];
-
     items.prototype.init = function(m) {
         this._parent = m;
+        this.rows = m.rows;
         this.cols = m.cols;
+        this.items = [];
         this.spawn();
         return this;
     };
@@ -27,17 +27,33 @@ var Items = (function() {
         } else {
             this.items[x][y].replace(item);
         }
+        return this;
+    };
 
+    items.prototype.addCollection = function(items) {
+        for (var i = 0; i < items.length; i++) {
+            var item = items[i];
+            this.add(item.element, item.x, item.y); 
+        }
         return this;
     };
 
     items.prototype.drop = function(x, y) {
-        if(this.items[x][y]) {
+        if(this.items[x] && this.items[x][y]) {
             this.items[x][y].drop();
             delete this.items[x][y];
         }
         return this;
     };
+
+    items.prototype.clear = function() {
+        for (var y = 0; y < this.rows; y++) {
+            for (var x = 0; x < this.cols; x++) {
+                this.drop(x,y);
+            }
+        }
+        return this;
+    }
 
     items.prototype.get = function(x,y) {
         return this.items[x][y] || null;

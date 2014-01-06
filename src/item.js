@@ -67,7 +67,7 @@ var Item = (function() {
     };
 
     item.prototype.add = function(item) {
-        this.container.appendChild(this.item);
+        this.container.appendChild(item);
     };
 
     item.prototype.replace = function(item) {
