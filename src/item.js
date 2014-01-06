@@ -71,11 +71,14 @@ var Item = (function() {
     };
 
     item.prototype.replace = function(item) {
+        this.drop();
+        this.add(item);
+    };
+
+    item.prototype.drop = function() {
         while (this.container.firstChild) {
             this.container.removeChild(this.container.firstChild);
         }
-
-        this.add(item);
     };
 
     return item;

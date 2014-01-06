@@ -31,6 +31,14 @@ var Items = (function() {
         return this;
     };
 
+    items.prototype.drop = function(x, y) {
+        if(this.items[x][y]) {
+            this.items[x][y].drop();
+            delete this.items[x][y];
+        }
+        return this;
+    };
+
     items.prototype.get = function(x,y) {
         return this.items[x][y] || null;
     };

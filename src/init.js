@@ -30,8 +30,6 @@ zaxxon.prototype.init = function(userConfig) {
 
     this.createSVG();
 
-    console.log(this.config.zoom);
-
     this.map = new Map(this);
 
     bindEvents(this);
@@ -49,6 +47,10 @@ zaxxon.prototype.createSVG = function() {
 
 zaxxon.prototype.addItem = function(item, x, y) {
     return this.map.items.add(item, x, y);
+};
+
+zaxxon.prototype.dropItem = function(x, y) {
+    return this.map.items.drop(x, y);
 };
 
 zaxxon.prototype.connect = function(coords1, coords2, userParams) {

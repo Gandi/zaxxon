@@ -41,6 +41,27 @@ test('addItem', function() {
     ok(el.getElementsByClassName('items-' + x2 + '-' + y2).length);
 });
 
+test('dropItem', function() {
+    var mymap = new Zaxxon({ container: 'dropItem', tiles: { cols: 15, rows: 15 } });
+    var el = document.getElementById('dropItem');
+
+    // Oversized item
+    var svg1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+    svg1.setAttributeNS(null, 'width', '15');
+    svg1.setAttributeNS(null, 'height', '300');
+    svg1.setAttributeNS(null, 'fill', '#FF0000');
+    var x1 = 8;
+    var y1 = 10;
+    mymap.addItem(svg1, x1, y1);
+
+    ok(el.getElementsByClassName('items-' + x1 + '-' + y1).length);
+
+    mymap.dropItem(x1, y1);
+
+    // Check that item is actually dropped
+    ok(!el.getElementsByClassName('items-' + x1 + '-' + y1)[0].childNodes.length);
+});
+
 test('connect', function() {
     var mymap = new Zaxxon({ container: 'connect', tiles: { cols: 5, rows: 5 } });
     var el = document.getElementById('connect');
