@@ -52,6 +52,7 @@ var Item = (function() {
     item.prototype.bindEvents = function(g) {
         this.bindDragAndDrop();
         this.bindMouseOver();
+        this.bindClick();
     };
 
     item.prototype.add = function(item) {
