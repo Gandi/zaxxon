@@ -80,7 +80,20 @@ var Item = (function() {
         var event = document.createEvent('CustomEvent');
         event.initCustomEvent('itemmouseover', true, true, { element: this.item, item : this, x: this.x, y: this.y });
         this._parent.trigger(event);
-    }
+    };
+
+    item.prototype.bindClick = function() {
+        var that = this;
+        this.container.addEventListener('click', function(e) {
+            that.click();
+        });
+    };
+
+    item.prototype.click = function() {
+        var event = document.createEvent('CustomEvent');
+        event.initCustomEvent('itemclick', true, true, { element: this.item, item : this, x: this.x, y: this.y });
+        this._parent.trigger(event);
+    };
 
     item.prototype.bindDragAndDrop = function() {
         var self = this;
