@@ -91,11 +91,11 @@ var bindEvents = function(self) {
         var wheelDelta = e.wheelDelta || e.deltaY;
         if ((e.deltaY && e.deltaY > 0)
             || (e.wheelDeltaY && e.wheelDelta <= -120)) {
-            if (self.map.zoom - 1 == self.config.minZoom) return;
+            if (self.map.zoom - 1 < self.config.minZoom) return;
             self.map.zoomto(self.map.zoom - 1);
         } else if ((e.deltaY && e.deltaY < 0)
                    || (e.wheelDeltaY && e.wheelDelta >= 120)) {
-            if (self.map.zoom + 1 == self.config.maxZoom) return;
+            if (self.map.zoom + 1 > self.config.maxZoom) return;
             self.map.zoomto(self.map.zoom + 1);
         }
     }
