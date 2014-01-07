@@ -38,10 +38,21 @@ var Tiles = (function() {
                 rect.setAttributeNS(null, 'stroke', '#003355');
                 rect.setAttributeNS(null, 'stroke-width', '1');
                 rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + this.rotationCenter + ' ' + this.rotationCenter + ')');
+                var self = this;
+                rect.addEventListener('mouseover', this.tilemouseover(rect, i, j));
                 this.containerTiles.appendChild(rect);
             }
         }
         this.container.setAttributeNS(null, 'transform', 'scale(1 0.5)');
+    };
+
+    tiles.prototype.tilemouseover = function(element, x,y) {
+        var self = this;
+        return function(e) {
+            var event = document.createEvent('CustomEvent');
+            event.initCustomEvent('itemmouseover', true, true, { element: element, x: x, y: y });
+            self._parent.trigger(event);
+        }
     };
 
     tiles.prototype.addLayer = function(layer, layerId) {

@@ -13,7 +13,7 @@ test('itemmouseover', function() {
 
     ok(el.getElementsByClassName('items-' + x1 + '-' + y1).length);
 
-    mymap.listen('itemmouseover', function(e) {
+    mymap.addEventListener('itemmouseover', function(e) {
         ok(e.detail.item);
         ok(e.detail.element);
         equal(e.detail.x, x1);
@@ -39,7 +39,7 @@ test('itemclick', function() {
 
     ok(el.getElementsByClassName('items-' + x1 + '-' + y1).length);
 
-    mymap.listen('itemclick', function(e) {
+    mymap.addEventListener('itemclick', function(e) {
         ok(e.detail.item);
         ok(e.detail.element);
         equal(e.detail.x, x1);

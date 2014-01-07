@@ -59,6 +59,28 @@ var Items = (function() {
         return this;
     }
 
+    items.prototype.setDragged = function(item) {
+        this._dragged = item;
+    };
+
+    items.prototype.move = function(x, y, item) {
+        if(!item) {
+            item = this._dragged;
+        }
+        if(!item) {
+            return false;
+        }
+        delete this.items[item.x][item.y];
+
+        if(!this.items[x]) this.items[x] = [];
+        this.items[x][y] = item;
+
+        item.x = x;
+        item.y = y;
+        item.position();
+        return { x: x, y: y };
+    };
+
     items.prototype.get = function(x,y) {
         return this.items[x][y] || null;
     };

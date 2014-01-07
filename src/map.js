@@ -31,6 +31,9 @@ var Map = (function() {
     };
 
     map.prototype.trigger = function(e) {
+        if(e.type == 'itemmouseover') {
+            this.items.move(e.detail.x, e.detail.y);
+        }
         this._parent.trigger(e);
     };
 

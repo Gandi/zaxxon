@@ -18,10 +18,14 @@ var Item = (function() {
     };
 
     item.prototype.spawn = function() {
+        this.container = document.createElementNS(xmlns, 'g');
+        this.position();
+    };
+
+    item.prototype.position = function() {
         var rect = this._parent._parent.tiles.get(this.x, this.y);
         var rectX = rect.x.baseVal.value;
         var rectY = rect.y.baseVal.value;
-        this.container = document.createElementNS(xmlns, 'g');
         this.container.setAttributeNS(null, 'class', 'items-' + this.x + '-' + this.y);
         this.container.setAttributeNS(xmlns, 'desc', this.x + ' ' + this.y);
         for (var i = 0; i < this._parent.container.childNodes.length; i++) {
@@ -84,9 +88,9 @@ var Item = (function() {
     };
 
     item.prototype.bindClick = function() {
-        var that = this;
+        var self = this;
         this.container.addEventListener('click', function(e) {
-            that.click();
+            self.click();
         });
     };
 
@@ -96,21 +100,27 @@ var Item = (function() {
         this._parent.trigger(event);
     };
 
+    item.move
+
+    var dragEvent;
+
     item.prototype.bindDragAndDrop = function() {
         var self = this;
-        this.container.addEventListener('mousedown', function(e) {
-            e.stopPropagation();
-            dragEvent = e;
-            this.addEventListener('mousemove', mousemove);
+        this.container.addEventListener('dragstart', function(e) {
+            e.preventDefault();
         });
 
-        var mousemove = function(e) {
-            e.preventDefault();
-            var deltaX = e.pageX - dragEvent.pageX;
-            var deltaY = e.pageY - dragEvent.pageY;
-//            self.move(deltaX, deltaY);
-            dragEvent = e;
-        }
+        this.container.addEventListener('mousedown', function(e) {
+            e.stopPropagation();
+            self._parent.setDragged(self);
+            this.classList.add("dragged");
+        });
+
+        this.container.addEventListener('mouseup', function(e) {
+            e.stopPropagation();
+            self._parent.setDragged(undefined);
+            this.classList.remove("dragged");
+        });
     };
 
     return item;
