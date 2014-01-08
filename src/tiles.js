@@ -10,22 +10,15 @@ var Tiles = (function() {
         // Arbitrary size
         this.size = 100;
         this.rotationCenter = 0;
+        this.container = m.containerGround;
         this.spawn();
         return this;
     };
 
     tiles.prototype.spawn = function() {
-        this.container = document.createElementNS (xmlns, "g");
-        this.container.setAttribute('class', 'zaxxon-ground');
-        this._parent.container.appendChild(this.container);
-
         this.containerTiles = document.createElementNS (xmlns, "g");
         this.containerTiles.setAttribute('class', 'zaxxon-tiles');
         this.container.appendChild(this.containerTiles);
-
-        this.containerLayers = document.createElementNS (xmlns, "g");
-        this.containerLayers.setAttribute('class', 'zaxxon-layers');
-        this.container.appendChild(this.containerLayers);
 
         for(var i = 0; i < this._parent.rows; i++) {
             for(var j = 0; j < this._parent.cols; j++) {
@@ -53,15 +46,6 @@ var Tiles = (function() {
             event.initCustomEvent('itemmouseover', true, true, { element: element, x: x, y: y });
             self._parent.trigger(event);
         }
-    };
-
-    tiles.prototype.addLayer = function(layer, layerId) {
-        var layerContainer = document.createElementNS (xmlns, "g");
-        for (var i = 0; i < layer.length; i++) {
-            var item = layer[i];
-            layerContainer.appendChild(item);
-        }
-        this.containerLayers.appendChild(layerContainer);
     };
 
     tiles.prototype.get = function(x,y) {

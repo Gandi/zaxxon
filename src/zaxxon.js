@@ -4,6 +4,8 @@ import "start";
 import "init";
 import "map";
 import "tiles";
+import "layers";
+import "link";
 import "items";
 import "item";
 
