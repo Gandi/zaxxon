@@ -100,15 +100,10 @@ var Item = (function() {
         this._parent.trigger(event);
     };
 
-    item.move
-
     var dragEvent;
 
     item.prototype.bindDragAndDrop = function() {
         var self = this;
-        this.container.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-        });
 
         this.container.addEventListener('mousedown', function(e) {
             e.stopPropagation();
