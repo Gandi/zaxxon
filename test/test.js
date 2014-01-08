@@ -120,6 +120,13 @@ test('refresh', function() {
     ok(el.getElementsByClassName('items-' + x1 + '-' + y1).length);
     ok(el.getElementsByClassName('items-' + x2 + '-' + y2).length);
 
+    mymap.connect([x1,y1], [x2,y2], { color: 'blue', particlesColor: '#ffffff', particlesQuantity: 5 });
+
+    var layer = el.getElementsByClassName('zaxxon-layers')[0].firstChild;
+
+    // 5 circles + 1 polyline
+    equal(layer.childNodes.length, 6)
+
     // Refresh with new position, same elements
     var x3, y3, x4, y4;
     x3 = y3 = 0;
@@ -129,7 +136,6 @@ test('refresh', function() {
             { element: svg2, x: x4, y: x4 },
         ]);
 
-
     //Old not present
     ok(!el.getElementsByClassName('items-' + x1 + '-' + y1)[0].childNodes.length);
     ok(!el.getElementsByClassName('items-' + x2 + '-' + y2)[0].childNodes.length);
@@ -137,4 +143,9 @@ test('refresh', function() {
     // New are present
     ok(el.getElementsByClassName('items-' + x3 + '-' + y3).length);
     ok(el.getElementsByClassName('items-' + x4 + '-' + y4).length);
+
+    layer = el.getElementsByClassName('zaxxon-layers')[0].firstChild;
+
+    // 5 circles + 1 polyline still present
+    equal(layer.childNodes.length, 6)
 });
