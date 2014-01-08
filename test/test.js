@@ -67,7 +67,7 @@ test('dropItem', function() {
 
 test('connect', function() {
     console.log('connect');
-    var mymap = new Zaxxon({ container: 'connect', tiles: { cols: 5, rows: 5 } });
+    var mymap = new Zaxxon({ container: 'connect', tiles: { cols: 20, rows: 20 } });
     var el = document.getElementById('connect');
 
     var svg1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
@@ -76,11 +76,11 @@ test('connect', function() {
     svg1.setAttributeNS(null, 'fill', '#FF0000');
     var x1 = 3;
     var y1 = 4;
-    mymap.addItem(svg1, x1, y1, { linked: 1 });
+    mymap.addItem(svg1, x1, y1);
 
     ok(el.getElementsByClassName('items-' + x1 + '-' + y1).length);
 
-    mymap.connect([x1,y1], [0,1], { color: 'blue', particlesColor: '#ffffff', particlesQuantity: 5 });
+    mymap.connect([x1,y1], [0,1], { color: 'blue', particlesColor: '#ffffff', particlesQuantity: 5, linked: 1 });
 
     var layer = el.getElementsByClassName('zaxxon-layers')[0].firstChild;
 
@@ -93,6 +93,9 @@ test('connect', function() {
     // Check color
     var circle = layer.childNodes[1];
     equal(circle.getAttribute('fill'), '#ffffff');
+
+    // Connect same object without link it (linked: 0 is default)
+    mymap.connect([x1,y1], [10,10], { color: 'green', particlesColor: 'yellow', particlesQuantity: 20 });
 });
 
 test('refresh', function() {
