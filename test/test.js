@@ -76,7 +76,7 @@ test('connect', function() {
     svg1.setAttributeNS(null, 'fill', '#FF0000');
     var x1 = 3;
     var y1 = 4;
-    mymap.addItem(svg1, x1, y1);
+    mymap.addItem(svg1, x1, y1, { linked: 1 });
 
     ok(el.getElementsByClassName('items-' + x1 + '-' + y1).length);
 

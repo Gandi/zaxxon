@@ -24,10 +24,10 @@ var Items = (function() {
         this._parent.container.appendChild(this.container);
     };
 
-    items.prototype.add = function(item, x, y) {
+    items.prototype.add = function(item, x, y, params) {
         if(!this.items[x]) this.items[x] = [];
         if(!this.items[x][y]) {
-            this.items[x][y] = new Item(this, item, x, y);
+            this.items[x][y] = new Item(this, item, x, y, params);
         } else {
             this.items[x][y].replace(item);
         }
@@ -45,7 +45,7 @@ var Items = (function() {
 
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
-            this.add(item.element, item.x, item.y); 
+            this.add(item.element, item.x, item.y, item.params); 
         }
         return this;
     };
@@ -69,6 +69,10 @@ var Items = (function() {
 
     items.prototype.setDragged = function(item) {
         this._dragged = item;
+    };
+
+    items.prototype.getDragged = function() {
+        return this._dragged;
     };
 
     items.prototype.move = function(x, y, item) {

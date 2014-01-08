@@ -43,7 +43,7 @@ var Tiles = (function() {
         var self = this;
         return function(e) {
             var event = document.createEvent('CustomEvent');
-            event.initCustomEvent('itemmouseover', true, true, { element: element, x: x, y: y });
+            event.initCustomEvent('tilemouseover', true, true, { element: element, x: x, y: y });
             self._parent.trigger(event);
         }
     };

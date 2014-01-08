@@ -5,11 +5,13 @@ var Item = (function() {
 
     var dragEvent;
 
-    item.prototype.init = function(i, item, x, y) {
+    item.prototype.init = function(i, item, x, y, params) {
+        params = params || {};
         this._parent = i;
         this.item = item;
         this.x = x;
         this.y = y;
+        this.linked = params.linked || 0;
         this.spawn();
         this.bindEvents()
         this.add(this.item);
@@ -104,6 +106,10 @@ var Item = (function() {
 
     item.prototype.bindDragAndDrop = function() {
         var self = this;
+
+        this.container.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        });
 
         this.container.addEventListener('mousedown', function(e) {
             e.stopPropagation();

@@ -41,7 +41,22 @@ var Map = (function() {
     };
 
     map.prototype.trigger = function(e) {
-        if(e.type == 'itemmouseover') {
+        if(e.type == 'tilemouseover') {
+            if(this.items.getDragged() && this.items.getDragged().linked) {
+                for (var i = 0; i < this.links.length; i++) {
+                    var link = this.links[i];
+                    var x = this.items.getDragged().x;
+                    var y = this.items.getDragged().y;
+                    if(link.coords1[0] == x && link.coords1[1] == y) {
+                        link.coords1 = [e.detail.x,e.detail.y];
+                        link.refresh();
+                    } else if (link.coords2[0] == x && link.coords2[1] == y) {
+                        link.coords2 = [e.detail.x,e.detail.y];
+                        link.refresh();
+                    }
+                }
+                this.layers.refresh(this.links);
+            }
             this.items.move(e.detail.x, e.detail.y);
         }
         this._parent.trigger(e);

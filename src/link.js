@@ -8,7 +8,10 @@ var Link = (function() {
         this.rows = m.rows;
         this.tileSize = m.tiles.size;
         this.items = m.items.items;
+        this.coords1 = coords1;
+        this.coords2 = coords2;
         this.diagonalPathfinder = m.diagonalPathfinder;
+
         var params = {
             size: 50,
             color: '#333333',
@@ -21,20 +24,32 @@ var Link = (function() {
         for (var attrname in userParams) {
             params[attrname] = userParams[attrname];
         }
-        this.create(coords1, coords2, params);
+        this.color = params.color;
+        this.size = params.size;
+        this.particlesQuantity = params.particlesQuantity;
+        this.particlesColor = params.particlesColor;
+        this.particlesSize = params.particlesSize;
+        this.particlesSpeed = params.particlesSpeed;
+
+        this.create();
         return this;
     };
 
-    link.prototype.create = function(coords1, coords2, params) {
-        var path = this.pathfinder(coords1, coords2);
+    link.prototype.refresh = function() {
+        this.element = undefined;
+        this.create();
+    };
+
+    link.prototype.create = function() {
+        var path = this.pathfinder(this.coords1, this.coords2);
 
         var tileSize = this.tileSize;
-        var size = params.size;
-        var color = params.color;
-        var particleQuantity = params.particlesQuantity;
-        var particleColor = params.particlesColor;
-        var particleSize = params.particlesSize;
-        var particleSpeed = params.particlesSpeed;
+        var size = this.size;
+        var color = this.color;
+        var particleQuantity = this.particlesQuantity;
+        var particleColor = this.particlesColor;
+        var particleSize = this.particlesSize;
+        var particleSpeed = this.particlesSpeed;
 
         var layer = [];
 

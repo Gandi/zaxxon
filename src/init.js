@@ -43,8 +43,8 @@ zaxxon.prototype.createSVG = function() {
     c.appendChild(this.container);
 };
 
-zaxxon.prototype.addItem = function(item, x, y) {
-    return this.map.items.add(item, x, y);
+zaxxon.prototype.addItem = function(item, x, y, params) {
+    return this.map.items.add(item, x, y, params);
 };
 
 zaxxon.prototype.addItemCollection = function(items) {
