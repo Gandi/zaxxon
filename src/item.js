@@ -11,8 +11,9 @@ var Item = (function() {
         this.item = item;
         this.x = x;
         this.y = y;
-        this.linked = params.linked || 0;
+        this.linked = 0;
         this.spawn();
+        this.id = this._parent.getUniqueId();
         this.bindEvents()
         this.add(this.item);
 

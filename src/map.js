@@ -41,18 +41,21 @@ var Map = (function() {
     };
 
     map.prototype.trigger = function(e) {
-        if(e.type == 'tilemouseover') {
-            if(this.items.getDragged() && this.items.getDragged().linked) {
+        if (e.type == 'tilemouseover') {
+            if (this.items.getDragged() && this.items.getDragged().linked) {
                 for (var i = 0; i < this.links.length; i++) {
                     var link = this.links[i];
-                    var x = this.items.getDragged().x;
-                    var y = this.items.getDragged().y;
-                    if(link.coords1[0] == x && link.coords1[1] == y) {
-                        link.coords1 = [e.detail.x,e.detail.y];
-                        link.refresh();
-                    } else if (link.coords2[0] == x && link.coords2[1] == y) {
-                        link.coords2 = [e.detail.x,e.detail.y];
-                        link.refresh();
+                    var item = this.items.getDragged();
+                    if (link.links.indexOf(item.id) != -1) {
+                        var x = item.x;
+                        var y = item.y;
+                        if(link.coords1[0] == x && link.coords1[1] == y) {
+                            link.coords1 = [e.detail.x,e.detail.y];
+                            link.refresh();
+                        } else if (link.coords2[0] == x && link.coords2[1] == y) {
+                            link.coords2 = [e.detail.x,e.detail.y];
+                            link.refresh();
+                        }
                     }
                 }
                 this.layers.refresh(this.links);
@@ -134,6 +137,18 @@ var Map = (function() {
 
     map.prototype.connect = function(coords1, coords2, userParams) {
         if (!this.links) this.links = [];
+        if(userParams && userParams.linked) {
+            var items = this.items.getFlatList();
+            userParams.links = [];
+            console.log('ok');
+            for (var i = 0; i < items.length; i++) {
+                if (items[i].x == coords1[0] && items[i].y == coords1[1]
+                    || items[i].x == coords2[0] && items[i].y == coords2[1]) {
+                    items[i].linked = 1;
+                    userParams.links.push(items[i].id);
+                }
+            };
+        }
         var link = new Link(this, coords1, coords2, userParams)
         this.links.push(link);
         this.layers.add(link);

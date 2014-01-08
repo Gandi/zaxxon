@@ -18,7 +18,8 @@ var Link = (function() {
             particlesColor: 'yellow',
             particlesSize: 10,
             particlesSpeed: 10,
-            particlesQuantity: 20
+            particlesQuantity: 20,
+            links: []
         };
 
         for (var attrname in userParams) {
@@ -30,6 +31,7 @@ var Link = (function() {
         this.particlesColor = params.particlesColor;
         this.particlesSize = params.particlesSize;
         this.particlesSpeed = params.particlesSpeed;
+        this.links = params.links;
 
         this.create();
         return this;

@@ -26,7 +26,7 @@ zaxxon.prototype.init = function(userConfig) {
         this.config[attrname] = userConfig[attrname];
     }
 
-    this.createSVG();
+    createSVG(this);
 
     this.map = new Map(this);
 
@@ -35,12 +35,12 @@ zaxxon.prototype.init = function(userConfig) {
     return this;
 };
 
-zaxxon.prototype.createSVG = function() {
-    var c = document.getElementById(this.config.container);
-    this.container = document.createElementNS (xmlns, "svg");
-    this.container.setAttributeNS(null, 'width', c.offsetWidth);
-    this.container.setAttributeNS(null, 'height', c.offsetHeight);
-    c.appendChild(this.container);
+var createSVG = function(self) {
+    var c = document.getElementById(self.config.container);
+    self.container = document.createElementNS (xmlns, "svg");
+    self.container.setAttributeNS(null, 'width', c.offsetWidth);
+    self.container.setAttributeNS(null, 'height', c.offsetHeight);
+    c.appendChild(self.container);
 };
 
 zaxxon.prototype.addItem = function(item, x, y, params) {

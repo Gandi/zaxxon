@@ -34,13 +34,22 @@ var Items = (function() {
         return this.items[x][y];
     };
 
-    items.prototype.addCollection = function(items) {
-        if (!items) {
-            for (var i = 0; i < this.items.length; i++) {
+    items.prototype.getFlatList = function() {
+        var items = [];
+        for (var i = 0; i < this.items.length; i++) {
+            if (this.items[i]) {
                 for (var j = 0; j < this.items[i].length; j++) {
-                    if (items[i][j]) items.push(items[i][j]);
+                    if (this.items[i][j]) items.push(this.items[i][j]);
                 }
             }
+        }
+
+        return items;
+    };
+
+    items.prototype.addCollection = function(items) {
+        if (!items) {
+            items = this.getFlatList();
         }
 
         for (var i = 0; i < items.length; i++) {
@@ -95,6 +104,12 @@ var Items = (function() {
 
     items.prototype.get = function(x,y) {
         return this.items[x][y] || null;
+    };
+
+    var lastId = 0;
+
+    items.prototype.getUniqueId = function() {
+        return lastId ++;
     };
 
     return items;
