@@ -14,8 +14,14 @@ var Layers = (function() {
         this._parent.containerGround.appendChild(this.container);
     };
 
-    layers.prototype.add = function(item) {
-        this.container.appendChild(item.element);
+    layers.prototype.add = function(layer) {
+        this.container.appendChild(layer.element);
+    };
+
+    layers.prototype.addCollection = function(layers) {
+        for (var i = 0; i < layers.length; i++) {
+            this.container.appendChild(layers[i].element);
+        }
     };
 
     layers.prototype.clear = function() {
@@ -24,11 +30,9 @@ var Layers = (function() {
         }
     };
 
-    layers.prototype.refresh = function(items) {
+    layers.prototype.refresh = function(layers) {
         this.clear();
-        for (var i = 0; i < items.length; i++) {
-            this.container.appendChild(items[i].element);
-        }
+        this.addCollection(layers);
     };
 
     return layers;

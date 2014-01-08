@@ -109,15 +109,18 @@ var Map = (function() {
         updateContainer(this);
     };
 
-    map.prototype.refresh = function(items) {
+    map.prototype.refresh = function(items, links) {
         this.items.clear();
         this.items.addCollection(items);
+
+        this.links = links || this.links;
+        this.layers.refresh(this.links);
     }
 
     map.prototype.connect = function(coords1, coords2, userParams) {
         if (!this.links) this.links = [];
         var link = new Link(this, coords1, coords2, userParams)
-        console.log(link);
+        this.links.push(link);
         this.layers.add(link);
     };
 

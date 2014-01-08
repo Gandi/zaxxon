@@ -35,6 +35,14 @@ var Items = (function() {
     };
 
     items.prototype.addCollection = function(items) {
+        if (!items) {
+            for (var i = 0; i < this.items.length; i++) {
+                for (var j = 0; j < this.items[i].length; j++) {
+                    if (items[i][j]) items.push(items[i][j]);
+                }
+            }
+        }
+
         for (var i = 0; i < items.length; i++) {
             var item = items[i];
             this.add(item.element, item.x, item.y); 
@@ -42,18 +50,18 @@ var Items = (function() {
         return this;
     };
 
-    items.prototype.drop = function(x, y) {
+    items.prototype.drop = function(x, y, deep) {
         if(this.items[x] && this.items[x][y]) {
             this.items[x][y].drop();
-            delete this.items[x][y];
+            if (deep) delete this.items[x][y];
         }
         return this;
     };
 
-    items.prototype.clear = function() {
+    items.prototype.clear = function(deep) {
         for (var y = 0; y < this.rows; y++) {
             for (var x = 0; x < this.cols; x++) {
-                this.drop(x,y);
+                this.drop(x,y, deep);
             }
         }
         return this;
