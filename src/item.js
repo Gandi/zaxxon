@@ -18,6 +18,8 @@ var Item = (function() {
         return this;
     };
 
+    var dragTimer;
+
     var bindEvents = function(self) {
         bindDragAndDrop(self);
         bindMouseOver(self);
@@ -30,9 +32,12 @@ var Item = (function() {
         });
 
         self.container.addEventListener('mousedown', function(e) {
+            var element = this;
             e.stopPropagation();
-            self._parent.setDragged(self);
-            this.classList.add("dragged");
+            dragTimer = window.setTimeout(function() {
+                self._parent.setDragged(self);
+                element.classList.add("dragged");
+            }, '300');
         });
 
         self.container.addEventListener('mouseup', function(e) {
@@ -50,6 +55,7 @@ var Item = (function() {
 
     var bindClick = function(self) {
         self.container.addEventListener('click', function(e) {
+            window.clearTimeout(dragTimer);
             self.click();
         });
     };
