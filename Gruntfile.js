@@ -28,7 +28,7 @@ module.exports = function(grunt) {
             },
             files: {
                 "css/zaxxon.css": "less/zaxxon.less",
-                "css/theme/beehive.css": "less/theme/beehive.less"
+                "css/theme/sandbox.css": "less/theme/sandbox.less"
             }
         }
 	},
