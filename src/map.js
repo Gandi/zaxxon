@@ -42,13 +42,19 @@ var Map = (function() {
     };
 
     var bindEvents = function(self) {
+        var mouseleave = function(e) {
+            var event = document.createEvent('CustomEvent');
+            event.initCustomEvent('mapmouseup', true, true, { element: self.container });
+            self.trigger(event);
+        };
+        self.container.addEventListener('mouseleave', mouseleave);
     };
 
     map.prototype.trigger = function(e) {
         if (e.type == 'tilemouseover') {
             this.items.move(e.detail.x, e.detail.y);
         }
-        if (e.type == 'tilemouseup') {
+        if (e.type == 'tilemouseup' || e.type == 'mapmouseup') {
             if (this.items.getDragged()) {
                 if (this.items.getDragged().linked) {
                     for (var i = 0; i < this.links.length; i++) {
@@ -57,10 +63,10 @@ var Map = (function() {
                         var x = item.x;
                         var y = item.y;
                         if (link.links.start.indexOf(item.id) != -1) {
-                            link.coords1 = [e.detail.x,e.detail.y];
+                            link.coords1 = [x, y];
                             link.refresh();
                         } else if (link.links.end.indexOf(item.id) != -1) {
-                            link.coords2 = [e.detail.x,e.detail.y];
+                            link.coords2 = [x, y];
                             link.refresh();
                         }
                     }
