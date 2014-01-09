@@ -42,10 +42,6 @@ var Map = (function() {
     };
 
     var bindEvents = function(self) {
-        self.container.addEventListener('mouseover', mouseover);
-        var mouseover = function() {
-            self.trigger('mapmouseover');
-        };
     };
 
     map.prototype.trigger = function(e) {
