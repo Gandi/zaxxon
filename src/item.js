@@ -3,8 +3,6 @@ var Item = (function() {
         return this.init(i, item, x, y);
     };
 
-    var dragEvent;
-
     item.prototype.init = function(i, item, x, y, params) {
         params = params || {};
         this._parent = i;
@@ -14,10 +12,46 @@ var Item = (function() {
         this.linked = 0;
         this.spawn();
         this.id = this._parent.getUniqueId();
-        this.bindEvents()
+        bindEvents(this);
         this.add(this.item);
 
         return this;
+    };
+
+    var bindEvents = function(self) {
+        bindDragAndDrop(self);
+        bindMouseOver(self);
+        bindClick(self);
+    };
+
+    var bindDragAndDrop = function(self) {
+        self.container.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+        });
+
+        self.container.addEventListener('mousedown', function(e) {
+            e.stopPropagation();
+            self._parent.setDragged(self);
+            this.classList.add("dragged");
+        });
+
+        self.container.addEventListener('mouseup', function(e) {
+            e.stopPropagation();
+            self._parent.setDragged(undefined);
+            self.stopDrag();
+        });
+    };
+
+    var bindMouseOver = function(self) {
+        self.container.addEventListener('mouseover', function(e) {
+            self.mouseover();
+        });
+    };
+
+    var bindClick = function(self) {
+        self.container.addEventListener('click', function(e) {
+            self.click();
+        });
     };
 
     item.prototype.spawn = function() {
@@ -60,12 +94,6 @@ var Item = (function() {
         return this.item;
     };
 
-    item.prototype.bindEvents = function(g) {
-        this.bindDragAndDrop();
-        this.bindMouseOver();
-        this.bindClick();
-    };
-
     item.prototype.add = function(item) {
         this.container.appendChild(item);
     };
@@ -81,52 +109,16 @@ var Item = (function() {
         }
     };
 
-    item.prototype.bindMouseOver = function() {
-        var that = this;
-        this.container.addEventListener('mouseover', function(e) {
-            that.mouseover();
-        });
-    };
-
     item.prototype.mouseover = function() {
         var event = document.createEvent('CustomEvent');
         event.initCustomEvent('itemmouseover', true, true, { element: this.item, item : this, x: this.x, y: this.y });
         this._parent.trigger(event);
     };
 
-    item.prototype.bindClick = function() {
-        var self = this;
-        this.container.addEventListener('click', function(e) {
-            self.click();
-        });
-    };
-
     item.prototype.click = function() {
         var event = document.createEvent('CustomEvent');
         event.initCustomEvent('itemclick', true, true, { element: this.item, item : this, x: this.x, y: this.y });
         this._parent.trigger(event);
-    };
-
-    var dragEvent;
-
-    item.prototype.bindDragAndDrop = function() {
-        var self = this;
-
-        this.container.addEventListener('dragstart', function(e) {
-            e.preventDefault();
-        });
-
-        this.container.addEventListener('mousedown', function(e) {
-            e.stopPropagation();
-            self._parent.setDragged(self);
-            this.classList.add("dragged");
-        });
-
-        this.container.addEventListener('mouseup', function(e) {
-            e.stopPropagation();
-            self._parent.setDragged(undefined);
-            self.stopDrag();
-        });
     };
 
     item.prototype.stopDrag = function() {
