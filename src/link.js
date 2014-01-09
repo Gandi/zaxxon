@@ -19,7 +19,7 @@ var Link = (function() {
             particlesSize: 10,
             particlesSpeed: 10,
             particlesQuantity: 20,
-            links: []
+            links: { start: [], end: [] }
         };
 
         for (var attrname in userParams) {

@@ -21,12 +21,6 @@ var Item = (function() {
     var dragTimer;
 
     var bindEvents = function(self) {
-        bindDragAndDrop(self);
-        bindMouseOver(self);
-        bindClick(self);
-    };
-
-    var bindDragAndDrop = function(self) {
         self.container.addEventListener('dragstart', function(e) {
             e.preventDefault();
         });
@@ -35,9 +29,10 @@ var Item = (function() {
             var element = this;
             e.stopPropagation();
             dragTimer = window.setTimeout(function() {
-                self._parent.setDragged(self);
-                element.classList.add("dragged");
-            }, '300');
+                startDrag(self, element);
+            }, '200');
+
+            self.container.addEventListener('mouseleave', mouseleave);
         });
 
         self.container.addEventListener('mouseup', function(e) {
@@ -45,19 +40,29 @@ var Item = (function() {
             self._parent.setDragged(undefined);
             self.stopDrag();
         });
-    };
 
-    var bindMouseOver = function(self) {
         self.container.addEventListener('mouseover', function(e) {
             self.mouseover();
         });
-    };
-
-    var bindClick = function(self) {
+    
         self.container.addEventListener('click', function(e) {
             window.clearTimeout(dragTimer);
             self.click();
         });
+
+        var startDrag = function (self, element) {
+            self._parent.setDragged(self);
+            element.classList.add("dragged");            
+        };
+
+        var mouseleave = function(e) {
+            var element = this;
+            if(dragTimer) {
+                window.clearTimeout(dragTimer);
+                startDrag(self, element);
+            }
+            self.container.removeEventListener('mouseleave', mouseleave);
+        };
     };
 
     item.prototype.spawn = function() {
