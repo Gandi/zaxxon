@@ -8,32 +8,42 @@ module.exports = function(grunt) {
 	},
 	smash: {
             build: {
-		src: 'src/<%= pkg.name %>.js',
-		dest: 'build/<%= pkg.name %>.js'
+		        src: 'src/<%= pkg.name %>.js',
+		        dest: 'build/<%= pkg.name %>.js'
             }
 	},
 	uglify: {
 	    options: {
-		banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+		    banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
 	    },
 	    build: {
-		src: 'build/<%= pkg.name %>.js',
-		dest: 'build/<%= pkg.name %>.min.js'
+		    src: 'build/<%= pkg.name %>.js',
+		    dest: 'build/<%= pkg.name %>.min.js'
 	    }
 	},
+	less: {
+        build: {
+            options: {
+                paths: ["css"]
+            },
+            files: {
+                "css/zaxxon.css": "less/zaxxon.less"
+            }
+        }
+	},
 	watch: {
-            files: ['src/*.js'],
+            files: ['src/*.js', 'test/*.js'],
             tasks: ['build']
 	}
     });
 
     grunt.loadNpmTasks('grunt-smash');
-    // Load the plugin that provides the "uglify" task.
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-less');
 
     // Default task(s).
-    grunt.registerTask('build', ['smash:build','uglify:build', 'qunit:all']);
+    grunt.registerTask('build', ['smash:build','uglify:build', 'less:build', 'qunit:all']);
 
 };
