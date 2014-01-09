@@ -29,7 +29,11 @@ var Item = (function() {
         var rect = this._parent._parent.tiles.get(this.x, this.y);
         var rectX = rect.x.baseVal.value;
         var rectY = rect.y.baseVal.value;
-        this.container.setAttributeNS(null, 'class', 'items-' + this.x + '-' + this.y);
+        var classes = 'items-' + this.x + '-' + this.y;
+        if (this._parent.getDragged() == this) {
+            classes += ' dragged';
+        }
+        this.container.setAttribute('class', classes);
         this.container.setAttributeNS(xmlns, 'desc', this.x + ' ' + this.y);
         for (var i = 0; i < this._parent.container.childNodes.length; i++) {
             var desc = this._parent.container.childNodes[i].getAttribute('desc');
@@ -121,8 +125,12 @@ var Item = (function() {
         this.container.addEventListener('mouseup', function(e) {
             e.stopPropagation();
             self._parent.setDragged(undefined);
-            this.classList.remove("dragged");
+            self.stopDrag();
         });
+    };
+
+    item.prototype.stopDrag = function() {
+        this.container.classList.remove("dragged");
     };
 
     return item;

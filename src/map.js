@@ -38,6 +38,14 @@ var Map = (function() {
         this.containerGround = document.createElementNS (xmlns, "g");
         this.containerGround.setAttribute('class', 'zaxxon-ground');
         this.container.appendChild(this.containerGround);
+        bindEvents(this);
+    };
+
+    var bindEvents = function(self) {
+        self.container.addEventListener('mouseover', mouseover);
+        var mouseover = function() {
+            self.trigger('mapmouseover');
+        };
     };
 
     map.prototype.trigger = function(e) {
@@ -61,6 +69,12 @@ var Map = (function() {
                 this.layers.refresh(this.links);
             }
             this.items.move(e.detail.x, e.detail.y);
+        }
+        if (e.type == 'tilemouseup') {
+            if (this.items.getDragged()) {
+                this.items.getDragged().stopDrag();
+                this.items.setDragged(undefined);
+            }
         }
         this._parent.trigger(e);
     };

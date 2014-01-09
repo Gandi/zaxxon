@@ -33,10 +33,20 @@ var Tiles = (function() {
                 rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + this.rotationCenter + ' ' + this.rotationCenter + ')');
                 var self = this;
                 rect.addEventListener('mouseover', this.tilemouseover(rect, i, j));
+                rect.addEventListener('mouseup', this.tilemouseup(rect, i, j));
                 this.containerTiles.appendChild(rect);
             }
         }
         this.container.setAttributeNS(null, 'transform', 'scale(1 0.5)');
+    };
+
+    tiles.prototype.tilemouseup = function(element, x,y) {
+        var self = this;
+        return function(e) {
+            var event = document.createEvent('CustomEvent');
+            event.initCustomEvent('tilemouseup', true, true, { element: element, x: x, y: y });
+            self._parent.trigger(event);
+        }
     };
 
     tiles.prototype.tilemouseover = function(element, x,y) {
