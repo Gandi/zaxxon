@@ -1,0 +1,20 @@
+/* Default styles, can be easily overwritten */
+.gradient (@startColor: #eee, @endColor: white) {
+	background-color: @startColor;
+	background: -webkit-gradient(linear, left top, left bottom, from(@startColor), to(@endColor));
+	background: -webkit-linear-gradient(top, @startColor, @endColor);
+	background: -moz-linear-gradient(top, @startColor, @endColor);
+	background: -ms-linear-gradient(top, @startColor, @endColor);
+	background: -o-linear-gradient(top, @startColor, @endColor);
+}
+
+.zaxxon {
+    .gradient(#FFF1E3, #E3B88D);
+    .zaxxon-tiles {
+        rect {
+            fill: #ffe2c4;
+            stroke: #B89C81;
+            stroke-width: 1;
+        }
+    }
+}

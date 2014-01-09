@@ -27,9 +27,6 @@ var Tiles = (function() {
                 rect.setAttributeNS(null, 'y', self.size*j);
                 rect.setAttributeNS(null, 'width', self.size);
                 rect.setAttributeNS(null, 'height', self.size);
-                rect.setAttributeNS(null, 'fill', '#aaccee');
-                rect.setAttributeNS(null, 'stroke', '#003355');
-                rect.setAttributeNS(null, 'stroke-width', '1');
                 rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + self.rotationCenter + ' ' + self.rotationCenter + ')');
                 rect.addEventListener('mouseover', self.tilemouseover(rect, i, j));
                 rect.addEventListener('mouseup', self.tilemouseup(rect, i, j));

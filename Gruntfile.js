@@ -27,12 +27,13 @@ module.exports = function(grunt) {
                 paths: ["css"]
             },
             files: {
-                "css/zaxxon.css": "less/zaxxon.less"
+                "css/zaxxon.css": "less/zaxxon.less",
+                "css/theme/beehive.css": "less/theme/beehive.less"
             }
         }
 	},
 	watch: {
-            files: ['src/*.js', 'test/*.js'],
+            files: ['src/*.js', 'test/*.js', 'less/*.less'],
             tasks: ['build']
 	}
     });
