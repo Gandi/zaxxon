@@ -8,6 +8,7 @@ zaxxon.prototype.version = '0.0.4'
 
 zaxxon.prototype.defaultConfig = {
     container: 'zaxxon',
+    element: undefined,
     tiles: {
         cols: 15,
         rows: 15
@@ -36,7 +37,7 @@ zaxxon.prototype.init = function(userConfig) {
 };
 
 var spawn = function(self) {
-    var c = document.getElementById(self.config.container);
+    var c = self.config.element || document.getElementById(self.config.container);
     self.container = document.createElementNS (xmlns, "svg");
     self.container.setAttribute('class', 'zaxxon');
     self.container.setAttributeNS(null, 'width', c.offsetWidth);
