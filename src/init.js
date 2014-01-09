@@ -26,7 +26,7 @@ zaxxon.prototype.init = function(userConfig) {
         this.config[attrname] = userConfig[attrname];
     }
 
-    createSVG(this);
+    spawn(this);
 
     this.map = new Map(this);
 
@@ -35,9 +35,10 @@ zaxxon.prototype.init = function(userConfig) {
     return this;
 };
 
-var createSVG = function(self) {
+var spawn = function(self) {
     var c = document.getElementById(self.config.container);
     self.container = document.createElementNS (xmlns, "svg");
+    self.container.setAttribute('class', 'zaxxon');
     self.container.setAttributeNS(null, 'width', c.offsetWidth);
     self.container.setAttributeNS(null, 'height', c.offsetHeight);
     c.appendChild(self.container);
