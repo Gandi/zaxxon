@@ -154,7 +154,6 @@ var Map = (function() {
         if(userParams && userParams.linked) {
             var items = this.items.getFlatList();
             userParams.links = [];
-            console.log('ok');
             for (var i = 0; i < items.length; i++) {
                 if (items[i].x == coords1[0] && items[i].y == coords1[1]
                     || items[i].x == coords2[0] && items[i].y == coords2[1]) {
