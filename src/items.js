@@ -10,7 +10,7 @@ var Items = (function() {
         this.rows = m.rows;
         this.cols = m.cols;
         this.items = [];
-        this.spawn();
+        spawn(this);
         return this;
     };
 
@@ -18,10 +18,10 @@ var Items = (function() {
         this._parent.trigger(e);
     };
 
-    items.prototype.spawn = function() {
-        this.container = document.createElementNS (xmlns, "g");
-        this.container.id = 'zaxxon-items';
-        this._parent.container.appendChild(this.container);
+    var spawn = function(self) {
+        self.container = document.createElementNS (xmlns, "g");
+        self.container.setAttribute('class', 'zaxxon-items');
+        self._parent.container.appendChild(self.container);
     };
 
     items.prototype.add = function(item, x, y, params) {

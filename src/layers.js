@@ -4,14 +4,14 @@ var Layers = (function() {
     };
     layers.prototype.init = function(m) {
         this._parent = m;
-        this.spawn();
+        spawn(this);
         return this;
     };
 
-    layers.prototype.spawn = function() {
-        this.container = document.createElementNS (xmlns, "g");
-        this.container.setAttribute('class', 'zaxxon-layers');
-        this._parent.containerGround.appendChild(this.container);
+    var spawn = function(self) {
+        self.container = document.createElementNS (xmlns, "g");
+        self.container.setAttribute('class', 'zaxxon-layers');
+        self._parent.containerGround.appendChild(self.container);
     };
 
     layers.prototype.add = function(layer) {

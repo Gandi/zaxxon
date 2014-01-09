@@ -5,7 +5,7 @@ var Map = (function() {
     
     map.prototype.init = function(z) {
         this._parent = z;
-        this.spawn();
+        spawn(this);
         this.parentContainer = z.container;
         this.zoomRatio = z.config.zoomRatio;
         this.zoom = z.config.zoom;
@@ -32,13 +32,13 @@ var Map = (function() {
         return this;
     };
 
-    map.prototype.spawn = function() {
-        this.container = document.createElementNS (xmlns, "g");
-        this._parent.container.appendChild(this.container);
-        this.containerGround = document.createElementNS (xmlns, "g");
-        this.containerGround.setAttribute('class', 'zaxxon-ground');
-        this.container.appendChild(this.containerGround);
-        bindEvents(this);
+    var spawn = function(self) {
+        self.container = document.createElementNS (xmlns, "g");
+        self._parent.container.appendChild(self.container);
+        self.containerGround = document.createElementNS (xmlns, "g");
+        self.containerGround.setAttribute('class', 'zaxxon-ground');
+        self.container.appendChild(self.containerGround);
+        bindEvents(self);
     };
 
     var bindEvents = function(self) {

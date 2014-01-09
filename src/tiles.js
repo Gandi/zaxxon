@@ -11,33 +11,32 @@ var Tiles = (function() {
         this.size = 100;
         this.rotationCenter = 0;
         this.container = m.containerGround;
-        this.spawn();
+        spawn(this);
         return this;
     };
 
-    tiles.prototype.spawn = function() {
-        this.containerTiles = document.createElementNS (xmlns, "g");
-        this.containerTiles.setAttribute('class', 'zaxxon-tiles');
-        this.container.appendChild(this.containerTiles);
+    var spawn = function(self) {
+        self.containerTiles = document.createElementNS (xmlns, "g");
+        self.containerTiles.setAttribute('class', 'zaxxon-tiles');
+        self.container.appendChild(self.containerTiles);
 
-        for(var i = 0; i < this._parent.rows; i++) {
-            for(var j = 0; j < this._parent.cols; j++) {
+        for(var i = 0; i < self._parent.rows; i++) {
+            for(var j = 0; j < self._parent.cols; j++) {
                 var rect = document.createElementNS (xmlns, 'rect');
-                rect.setAttributeNS(null, 'x', this.size*i);
-                rect.setAttributeNS(null, 'y', this.size*j);
-                rect.setAttributeNS(null, 'width', this.size);
-                rect.setAttributeNS(null, 'height', this.size);
+                rect.setAttributeNS(null, 'x', self.size*i);
+                rect.setAttributeNS(null, 'y', self.size*j);
+                rect.setAttributeNS(null, 'width', self.size);
+                rect.setAttributeNS(null, 'height', self.size);
                 rect.setAttributeNS(null, 'fill', '#aaccee');
                 rect.setAttributeNS(null, 'stroke', '#003355');
                 rect.setAttributeNS(null, 'stroke-width', '1');
-                rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + this.rotationCenter + ' ' + this.rotationCenter + ')');
-                var self = this;
-                rect.addEventListener('mouseover', this.tilemouseover(rect, i, j));
-                rect.addEventListener('mouseup', this.tilemouseup(rect, i, j));
-                this.containerTiles.appendChild(rect);
+                rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + self.rotationCenter + ' ' + self.rotationCenter + ')');
+                rect.addEventListener('mouseover', self.tilemouseover(rect, i, j));
+                rect.addEventListener('mouseup', self.tilemouseup(rect, i, j));
+                self.containerTiles.appendChild(rect);
             }
         }
-        this.container.setAttributeNS(null, 'transform', 'scale(1 0.5)');
+        self.container.setAttributeNS(null, 'transform', 'scale(1 0.5)');
     };
 
     tiles.prototype.tilemouseup = function(element, x,y) {
