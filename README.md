@@ -55,5 +55,5 @@ var x2 = 10;
 var y2 = 8;
 myzaxxon.addItem(svg2, x2, y2);
 
-myzaxxon.connect([x1,y1], [x2,y2], { color: '#00FF00', size: 80, particles: { quantity: 10, speed: 20 } });
+myzaxxon.connect([x1,y1], [x2,y2], { color: '#00FF00', size: 80, particlesQuantity: 10, particlesSpeed: 20 });
 ```
