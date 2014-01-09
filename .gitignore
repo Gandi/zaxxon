@@ -5,6 +5,7 @@
 *.patch
 .DS_Store
 build
+css
 bower_components
 bower_modules
 node_modules
