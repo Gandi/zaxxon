@@ -18,8 +18,6 @@ var Item = (function() {
         return this;
     };
 
-    var dragTimer;
-
     var bindEvents = function(self) {
         self.container.addEventListener('dragstart', function(e) {
             e.preventDefault();
@@ -28,9 +26,6 @@ var Item = (function() {
         self.container.addEventListener('mousedown', function(e) {
             var element = this;
             e.stopPropagation();
-            dragTimer = window.setTimeout(function() {
-                startDrag(self, element);
-            }, '200');
 
             self.container.addEventListener('mouseleave', mouseleave);
         });
@@ -38,6 +33,7 @@ var Item = (function() {
         self.container.addEventListener('mouseup', function(e) {
             e.stopPropagation();
             self._parent.setDragged(undefined);
+            self.container.removeEventListener('mouseleave', mouseleave);
             self.stopDrag();
         });
 
@@ -46,7 +42,6 @@ var Item = (function() {
         });
     
         self.container.addEventListener('click', function(e) {
-            window.clearTimeout(dragTimer);
             self.click();
         });
 
@@ -57,10 +52,7 @@ var Item = (function() {
 
         var mouseleave = function(e) {
             var element = this;
-            if(dragTimer) {
-                window.clearTimeout(dragTimer);
-                startDrag(self, element);
-            }
+            startDrag(self, element);
             self.container.removeEventListener('mouseleave', mouseleave);
         };
     };

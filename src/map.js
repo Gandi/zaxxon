@@ -46,7 +46,7 @@ var Map = (function() {
             var event = document.createEvent('CustomEvent');
             event.initCustomEvent('mapmouseup', true, true, { element: self.container });
             self.trigger(event);
-        };
+        }
         self.container.addEventListener('mouseleave', mouseleave);
     };
 
