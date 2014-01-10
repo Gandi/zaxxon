@@ -10,12 +10,17 @@ var Item = (function() {
         this.x = x;
         this.y = y;
         this.linked = 0;
-        this.spawn();
         this.id = this._parent.getUniqueId();
+        spawn(this);
         bindEvents(this);
         this.add(this.item);
 
         return this;
+    };
+
+    var spawn = function(self) {
+        self.container = document.createElementNS(xmlns, 'g');
+        self.position();
     };
 
     var bindEvents = function(self) {
@@ -55,11 +60,6 @@ var Item = (function() {
             startDrag(self, element);
             self.container.removeEventListener('mouseleave', mouseleave);
         };
-    };
-
-    item.prototype.spawn = function() {
-        this.container = document.createElementNS(xmlns, 'g');
-        this.position();
     };
 
     item.prototype.position = function() {
