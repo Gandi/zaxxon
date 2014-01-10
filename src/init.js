@@ -112,6 +112,11 @@ var bindEvents = function(self) {
         this.addEventListener('mousemove', mousemove);
     });
 
+    self.container.addEventListener('mouseleave', function() {
+        dragEvent = undefined;
+        this.removeEventListener('mousemove', mousemove);
+    });
+
     self.container.addEventListener('mouseup', function() {
         dragEvent = undefined;
         this.removeEventListener('mousemove', mousemove);
