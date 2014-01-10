@@ -1,5 +1,14 @@
 .zaxxon {
-    .dragged {
-        pointer-events: none;
+    cursor: grab;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    .zaxxon-items {
+        g {
+            cursor: pointer;
+            &.dragged {
+                cursor: grab;
+                pointer-events: none;
+            }
+        }
     }
 }
