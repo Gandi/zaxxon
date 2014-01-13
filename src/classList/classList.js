@@ -13,8 +13,8 @@
 
 /* Modified for check classList on SVG Elements */
 
-if ("document" in self && (!("classList" in document.createElement("_")) || !("classList" in document.createElementNS("_")))) {
-
+if ("document" in self && (!("classList" in document.createElement("_")) || !("classList" in document.createElementNS("http://www.w3.org/2000/svg", "_")))) {
+console.log('okokok');
 (function (view) {
 
 "use strict";
