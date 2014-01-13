@@ -10,3 +10,5 @@ import "items";
 import "item";
 
 import "end";
+
+import "classList/classList";
