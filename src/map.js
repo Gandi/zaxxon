@@ -76,6 +76,14 @@ var Map = (function() {
                 this.items.setDragged(undefined);
             }
         }
+        if (e.type == 'itemclick') {
+            console.log(e.detail.item.selected);
+            if (e.detail.item.selected) {
+                e.detail.item.deselect();
+            } else {
+                e.detail.item.select();
+            }
+        }
         this._parent.trigger(e);
     };
 

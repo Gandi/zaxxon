@@ -8,6 +8,24 @@
 	background: -o-linear-gradient(top, @startColor, @endColor);
 }
 
+@-webkit-keyframes selected {.selected-frames;}
+@-moz-keyframes selected {.selected-frames;}
+@-ms-keyframes selected {.selected-frames;}
+@-o-keyframes selected {.selected-frames;}
+@keyframes selected {.selected-frames;}
+
+.selected-frames() {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .zaxxon {
     .gradient(#FFF1E3, #E3B88D);
     .zaxxon-tiles {
@@ -15,6 +33,17 @@
             fill: #ffe2c4;
             stroke: #B89C81;
             stroke-width: 1;
+        }
+    }
+    .zaxxon-items {
+        .selected {
+            > * {
+                -webkit-animation: selected 1s infinite;
+                -moz-animation: selected 1s infinite;
+                -ms-animation: selected 1s infinite;
+                -o-animation: selected 1s infinite;
+                animation: selected 1s infinite;
+            }
         }
     }
 }

@@ -10,6 +10,7 @@ var Item = (function() {
         this.x = x;
         this.y = y;
         this.linked = 0;
+        this.selected = 0;
         this.id = this._parent.getUniqueId();
         spawn(this);
         bindEvents(this);
@@ -66,11 +67,18 @@ var Item = (function() {
         var rect = this._parent._parent.tiles.get(this.x, this.y);
         var rectX = rect.x.baseVal.value;
         var rectY = rect.y.baseVal.value;
-        var classes = 'items-' + this.x + '-' + this.y;
-        if (this._parent.getDragged() == this) {
-            classes += ' dragged';
+
+        var regex = new RegExp('\\b' + 'items-' + '.+?\\b', 'g');
+        var removedClasses = [];
+        for (var i = 0; i < this.container.classList.length; i++) {
+            if (regex.test(this.container.classList[i])) {
+                removedClasses.push(this.container.classList[i]);
+            }
         }
-        this.container.setAttribute('class', classes);
+        for (var i = 0; i < removedClasses.length; i++) {
+            this.container.classList.remove(removedClasses[i]);
+        }
+        this.container.classList.add('items-' + this.x + '-' + this.y);
         this.container.setAttributeNS(xmlns, 'desc', this.x + ' ' + this.y);
         for (var i = 0; i < this._parent.container.childNodes.length; i++) {
             var desc = this._parent.container.childNodes[i].getAttribute('desc');
@@ -121,11 +129,25 @@ var Item = (function() {
     item.prototype.click = function() {
         var event = document.createEvent('CustomEvent');
         event.initCustomEvent('itemclick', true, true, { element: this.item, item : this, x: this.x, y: this.y });
-        this._parent.trigger(event);
+        this.trigger(event);
     };
 
     item.prototype.stopDrag = function() {
         this.container.classList.remove("dragged");
+    };
+
+    item.prototype.select = function() {
+        this.selected = 1;
+        this.container.classList.add("selected");
+    };
+
+    item.prototype.deselect = function() {
+        this.selected = 0;
+        this.container.classList.remove("selected");
+    };
+
+    item.prototype.trigger = function(e) {
+        this._parent.trigger(e);
     };
 
     return item;
