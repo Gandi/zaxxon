@@ -2,9 +2,6 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
 	    pkg: grunt.file.readJSON('package.json'),
-	    qunit: {
-	        all: ['test/*.html']
-	    },
 	    smash: {
             build: {
 		        src: 'src/<%= pkg.name %>.js',
