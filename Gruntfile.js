@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         blanket_qunit: {
             all: {
                 options: {
-                    urls: ['test/generic.html?coverage=true&gruntReport'],
+                    urls: ['test/index.html?coverage=true&gruntReport'],
                     threshold: 75
                 }
             }
