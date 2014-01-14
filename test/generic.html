@@ -3,11 +3,12 @@
      <head>
          <meta charset="UTF-8" />
          <title>QUnit Test Suite</title>
-         <link rel="stylesheet" href="../bower_components/qunit/qunit/qunit.css">
+         <link rel="stylesheet" href="../node_modules/qunit/support/qunit/qunit/qunit.css">
          <link rel="stylesheet" href="../css/zaxxon.css">
          <link rel="stylesheet" href="../css/theme/sandbox.css">
-         <script src="../bower_components/qunit/qunit/qunit.js"></script>
-         <script src="../build/zaxxon.js"></script>
+         <script src="../node_modules/qunit/support/qunit/qunit/qunit.js"></script>
+         <script src="../node_modules/blanket/dist/qunit/blanket.js"></script>
+         <script src="../build/zaxxon.js" data-cover></script>
          <script src="test-generic.js"></script>
      </head>
      <body>
