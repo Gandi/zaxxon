@@ -45,42 +45,6 @@ var spawn = function(self) {
     c.appendChild(self.container);
 };
 
-zaxxon.prototype.addItem = function(item, x, y, params) {
-    return this.map.items.add(item, x, y, params);
-};
-
-zaxxon.prototype.addItemCollection = function(items) {
-    return this.map.items.addCollection(items);
-};
-
-zaxxon.prototype.dropItem = function(x, y) {
-    return this.map.items.drop(x, y);
-};
-
-zaxxon.prototype.connect = function(coords1, coords2, userParams) {
-    return this.map.connect(coords1, coords2, userParams);
-};
-
-zaxxon.prototype.clear = function() {
-    return this.map.clear();
-};
-
-zaxxon.prototype.refresh = function(items) {
-    return this.map.refresh(items);
-};
-
-zaxxon.prototype.addEventListener = function(name, func) {
-    this.container.addEventListener(name, func);
-};
-
-zaxxon.prototype.removeEventListener = function(name, func) {
-    this.container.removeEventListener(name, func);
-};
-
-zaxxon.prototype.trigger = function(e) {
-    this.container.dispatchEvent(e);
-};
-
 var dragEvent;
 
 var bindEvents = function(self) {
@@ -135,3 +99,39 @@ var clone = function(obj) {
     }
     return target;
 }
+
+zaxxon.prototype.addItem = function(item, x, y, params) {
+    return this.map.items.add(item, x, y, params);
+};
+
+zaxxon.prototype.addItemCollection = function(items) {
+    return this.map.items.addCollection(items);
+};
+
+zaxxon.prototype.dropItem = function(x, y) {
+    return this.map.items.drop(x, y);
+};
+
+zaxxon.prototype.connect = function(coords1, coords2, userParams) {
+    return this.map.connect(coords1, coords2, userParams);
+};
+
+zaxxon.prototype.clear = function() {
+    return this.map.clear();
+};
+
+zaxxon.prototype.refresh = function(items) {
+    return this.map.refresh(items);
+};
+
+zaxxon.prototype.addEventListener = function(name, func) {
+    this.container.addEventListener(name, func);
+};
+
+zaxxon.prototype.removeEventListener = function(name, func) {
+    this.container.removeEventListener(name, func);
+};
+
+zaxxon.prototype.trigger = function(e) {
+    this.container.dispatchEvent(e);
+};
