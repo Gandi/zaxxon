@@ -51,9 +51,11 @@ var dragEvent;
 var bindEvents = function(self) {
     var mousemove = function(e) {
         e.preventDefault();
-        var deltaX = e.pageX - dragEvent.pageX;
-        var deltaY = e.pageY - dragEvent.pageY;
-        self.map.move(deltaX, deltaY);
+        if(dragEvent) {
+            var deltaX = e.pageX - dragEvent.pageX;
+            var deltaY = e.pageY - dragEvent.pageY;
+            self.map.move(deltaX, deltaY);
+        }
         dragEvent = e;
     }
 
@@ -73,7 +75,6 @@ var bindEvents = function(self) {
 
     self.container.addEventListener('mousedown', function(e) {
         e.preventDefault();
-        dragEvent = e;
         this.addEventListener('mousemove', mousemove);
     });
 
@@ -82,7 +83,10 @@ var bindEvents = function(self) {
         this.removeEventListener('mousemove', mousemove);
     });
 
-    self.container.addEventListener('mouseup', function() {
+    self.container.addEventListener('mouseup', function(e) {
+        if(!dragEvent) {
+            self.map.deselectAll();
+        }
         dragEvent = undefined;
         this.removeEventListener('mousemove', mousemove);
     });

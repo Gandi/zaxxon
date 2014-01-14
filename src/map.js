@@ -84,6 +84,9 @@ var Map = (function() {
         if (e.type == 'itemmouseleave' && this.items.getDragged() == e.detail.item) {
             e.detail.item.select();
         }
+        if (e.type == 'tileclick') {
+            this.items.deselectAll();
+        }
         this._parent.trigger(e);
     };
 
@@ -178,8 +181,12 @@ var Map = (function() {
     };
 
     map.prototype.getSelection = function() {
-        return this.map.getSelection();
-    }
+        return this.items.getSelection();
+    };
+
+    map.prototype.deselectAll = function() {
+        return this.items.deselectAll();
+    };
 
     return map;
 })();

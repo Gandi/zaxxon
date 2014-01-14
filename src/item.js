@@ -48,6 +48,7 @@ var Item = (function() {
         });
     
         self.container.addEventListener('click', function(e) {
+            e.stopPropagation();
             self.click();
         });
 
@@ -67,9 +68,9 @@ var Item = (function() {
     };
 
     item.prototype.position = function() {
-        var rect = this._parent._parent.tiles.get(this.x, this.y);
-        var rectX = rect.x.baseVal.value;
-        var rectY = rect.y.baseVal.value;
+        var tile = this._parent._parent.tiles.get(this.x, this.y);
+        var tileX = tile.element.x.baseVal.value;
+        var tileY = tile.element.y.baseVal.value;
 
         var regex = new RegExp('\\b' + 'items-' + '.+?\\b', 'g');
         var removedClasses = [];
@@ -95,12 +96,12 @@ var Item = (function() {
             this._parent.container.appendChild(this.container);
         }
 
-        var scale = rect.getBoundingClientRect().width/this._parent._parent.zoomX / this.item.width.baseVal.value;
+        var scale = tile.element.getBoundingClientRect().width/this._parent._parent.zoomX / this.item.width.baseVal.value;
         var itemHeight = this.item.height.baseVal.value*scale;
-        var rectHeight = rect.getBoundingClientRect().height/this._parent._parent.zoomX;
+        var tileHeight = tile.element.getBoundingClientRect().height/this._parent._parent.zoomX;
         var angle = Math.PI/4;
-        var x = (rectY * Math.cos(angle) + rectX * Math.sin(angle));
-        var y = (rectY * Math.sin(angle) - rectX * Math.cos(angle)) / 2 - itemHeight + rectHeight/2;
+        var x = (tileY * Math.cos(angle) + tileX * Math.sin(angle));
+        var y = (tileY * Math.sin(angle) - tileX * Math.cos(angle)) / 2 - itemHeight + tileHeight/2;
         this.container.setAttributeNS(null, 'transform', 'translate(' + x + ' ' + y + ') scale(' + scale + ' ' + scale + ')');
     };
 
@@ -129,7 +130,7 @@ var Item = (function() {
         this._parent.trigger(event);
     };
 
-    item.prototype.click = function() {
+    item.prototype.click = function(e) {
         var event = document.createEvent('CustomEvent');
         event.initCustomEvent('itemclick', true, true, { element: this.item, item : this, x: this.x, y: this.y });
         this.trigger(event);
