@@ -9,6 +9,7 @@ var Map = (function() {
         this.parentContainer = z.container;
         this.zoomRatio = z.config.zoomRatio;
         this.zoom = z.config.zoom;
+        this.multipleSelect = z.config.multipleSelect;
         this.zoomX = this.zoom / this.zoomRatio;
         this.zoomY = this.zoom / this.zoomRatio;
         this.cols = z.config.tiles.cols;
@@ -78,13 +79,6 @@ var Map = (function() {
         }
         if (e.type == 'itemmouseleave' && this.items.getDragged() == e.detail.item) {
             e.detail.item.select();
-        }
-        if (e.type == 'itemclick') {
-            if (e.detail.item.selected) {
-                e.detail.item.deselect();
-            } else {
-                e.detail.item.select();
-            }
         }
         if (e.type == 'tileclick') {
             this.items.deselectAll();

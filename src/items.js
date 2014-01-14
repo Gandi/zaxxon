@@ -15,6 +15,16 @@ var Items = (function() {
     };
 
     items.prototype.trigger = function(e) {
+        if (e.type == 'itemclick') {
+            if (e.detail.item.selected) {
+                e.detail.item.deselect();
+            } else {
+                if (!this._parent.multipleSelect) {
+                    this.deselectAll();
+                }
+                e.detail.item.select();
+            }
+        }
         this._parent.trigger(e);
     };
 
