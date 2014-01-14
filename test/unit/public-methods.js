@@ -16,6 +16,32 @@ test('config', function() {
     equal(matrix.d, 1);
 });
 
+test('addItemCollection', function() {
+    console.log('addItemCollection');
+    var mymap = new Zaxxon({ container: 'addItemCollection', tiles: { cols: 21, rows: 21 } });
+    var el = document.getElementById('addItemCollection');
+
+    // 3 Oversized items
+    var items = [
+        { name: 'redItem', width: 200, height: 300, color: '#ff0000', x: 2, y: 4 },
+        { name: 'greenItem', width: 200, height: 300, color: '#00ff00', x: 4, y: 6 },
+        { name: 'blueItem', width: 200, height: 300, color: '#0000ff', x: 6, y: 8 }
+    ];
+    var itemCollection = [];
+    for (var i=0; i<items.length; i++) {
+        var svg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        svg.setAttributeNS(null, 'width', items[i].width);
+        svg.setAttributeNS(null, 'height', items[i].height);
+        svg.setAttributeNS(null, 'fill', items[i].color);
+        itemCollection.push({ element: svg, x: items[i].x, y: items[i].y });
+    }
+    mymap.addItemCollection(itemCollection);
+
+    for (var i=0; i<items.length; i++) {
+        ok(el.getElementsByClassName('items-' + items[i].x + '-' + items[i].y).length);
+    }
+});
+
 test('addItem', function() {
     console.log('addItem');
     var mymap = new Zaxxon({ container: 'addItem', tiles: { cols: 21, rows: 21 } });
