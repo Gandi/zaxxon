@@ -125,6 +125,10 @@ zaxxon.prototype.refresh = function(items) {
     return this.map.refresh(items);
 };
 
+zaxxon.prototype.getSelection = function() {
+    return this.map.getSelection();
+};
+
 zaxxon.prototype.addEventListener = function(name, func) {
     this.container.addEventListener(name, func);
 };

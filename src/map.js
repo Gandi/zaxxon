@@ -51,6 +51,10 @@ var Map = (function() {
         self.container.addEventListener('mouseleave', mouseleave);
     };
 
+    var updateContainer = function(self) {
+        self.container.setAttributeNS(null, 'transform', 'translate(' + self.containerX.toFixed(3) + ' ' + self.containerY.toFixed(3) +') scale(' + self.zoomX.toFixed(3) + ' ' + self.zoomY.toFixed(3) + ')');
+    };
+
     map.prototype.trigger = function(e) {
         if (e.type == 'tilemouseover') {
             this.items.move(e.detail.x, e.detail.y);
@@ -173,9 +177,9 @@ var Map = (function() {
         this.layers.add(link);
     };
 
-    var updateContainer = function(self) {
-        self.container.setAttributeNS(null, 'transform', 'translate(' + self.containerX.toFixed(3) + ' ' + self.containerY.toFixed(3) +') scale(' + self.zoomX.toFixed(3) + ' ' + self.zoomY.toFixed(3) + ')');
-    };
+    map.prototype.getSelection = function() {
+        return this.map.getSelection();
+    }
 
     return map;
 })();
