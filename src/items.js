@@ -31,6 +31,9 @@ var Items = (function() {
                 }
                 e.detail.item.select();
             }
+            var event = document.createEvent('CustomEvent');
+            event.initCustomEvent('updatedselection', true, true, { items: this.getSelection() });
+            this.trigger(event);
         }
         this._parent.trigger(e);
     };

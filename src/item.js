@@ -130,7 +130,7 @@ var Item = (function() {
     item.prototype.mouseover = function() {
         var event = document.createEvent('CustomEvent');
         event.initCustomEvent('itemmouseover', true, true, { item : this });
-        this._parent.trigger(event);
+        this.trigger(event);
     };
 
     item.prototype.click = function(e) {

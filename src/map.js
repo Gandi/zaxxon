@@ -90,9 +90,9 @@ var Map = (function() {
         }
         if (e.type == 'itemmouseleave' && this.items.getDragged() == e.detail.item) {
             e.detail.item.select();
-        }
-        if (e.type == 'tileclick') {
-            this.items.deselectAll();
+            var event = document.createEvent('CustomEvent');
+            event.initCustomEvent('updatedselection', true, true, { items: this.items.getSelection() });
+            this.trigger(event);
         }
         this._parent.trigger(e);
     };
@@ -192,7 +192,10 @@ var Map = (function() {
     };
 
     map.prototype.deselectAll = function() {
-        return this.items.deselectAll();
+        this.items.deselectAll();
+        var event = document.createEvent('CustomEvent');
+        event.initCustomEvent('updatedselection', true, true, { items: this.items.getSelection() });
+        this.trigger(event);
     };
 
     return map;
