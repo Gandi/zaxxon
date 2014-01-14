@@ -59,6 +59,9 @@ var Item = (function() {
         var mouseleave = function(e) {
             var element = this;
             startDrag(self, element);
+            var event = document.createEvent('CustomEvent');
+            event.initCustomEvent('itemmouseleave', true, true, { element: self.item, item : self, x: self.x, y: self.y });
+            self.trigger(event);
             self.container.removeEventListener('mouseleave', mouseleave);
         };
     };

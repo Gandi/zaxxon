@@ -30,6 +30,7 @@ var Tiles = (function() {
                 rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + self.rotationCenter + ' ' + self.rotationCenter + ')');
                 rect.addEventListener('mouseover', self.tilemouseover(rect, i, j));
                 rect.addEventListener('mouseup', self.tilemouseup(rect, i, j));
+                rect.addEventListener('click', self.tileclick(rect, i, j));
                 self.containerTiles.appendChild(rect);
             }
         }
@@ -41,6 +42,15 @@ var Tiles = (function() {
         return function(e) {
             var event = document.createEvent('CustomEvent');
             event.initCustomEvent('tilemouseup', true, true, { element: element, x: x, y: y });
+            self._parent.trigger(event);
+        }
+    };
+
+    tiles.prototype.tileclick = function(element, x,y) {
+        var self = this;
+        return function(e) {
+            var event = document.createEvent('CustomEvent');
+            event.initCustomEvent('tileclick', true, true, { element: element, x: x, y: y });
             self._parent.trigger(event);
         }
     };

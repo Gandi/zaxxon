@@ -76,13 +76,18 @@ var Map = (function() {
                 this.items.setDragged(undefined);
             }
         }
+        if (e.type == 'itemmouseleave' && this.items.getDragged() == e.detail.item) {
+            e.detail.item.select();
+        }
         if (e.type == 'itemclick') {
-            console.log(e.detail.item.selected);
             if (e.detail.item.selected) {
                 e.detail.item.deselect();
             } else {
                 e.detail.item.select();
             }
+        }
+        if (e.type == 'tileclick') {
+            this.items.deselectAll();
         }
         this._parent.trigger(e);
     };

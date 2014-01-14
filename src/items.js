@@ -112,5 +112,17 @@ var Items = (function() {
         return lastId ++;
     };
 
+    items.prototype.deselectAll = function() {
+        for (var i = 0; i < this.items.length; i++) {
+            if (this.items[i]) {
+                for (var j = 0; j < this.items[i].length; j++) {
+                    if (this.items[i][j]) {
+                        this.items[i][j].deselect();
+                    }
+                }
+            }
+        }
+    };
+
     return items;
 })();
