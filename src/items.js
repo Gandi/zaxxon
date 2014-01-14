@@ -1,3 +1,10 @@
+/**
+ * @name items.prototype
+ * @description
+ *
+ * Use to generate items in SVG.
+ */
+
 var Items = (function() {
     var items = function(z) {
         return this.init(z);

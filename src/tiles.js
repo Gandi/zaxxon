@@ -1,3 +1,10 @@
+/**
+ * @name tiles.prototype
+ * @description
+ *
+ * Use to generate all the tiles in function of the configuration.
+ */
+
 var Tiles = (function() {
     var tiles = function(m) {
         return this.init(m);

@@ -1,3 +1,10 @@
+/**
+ * @name item.prototype
+ * @description
+ *
+ * Available actions for an item.
+ */
+
 var Item = (function() {
     var item = function(i, item, x, y) {
         return this.init(i, item, x, y);

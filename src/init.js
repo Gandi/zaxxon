@@ -1,3 +1,10 @@
+/**
+ * @name zaxxon.prototype
+ * @description
+ *
+ * Main Interface to use Zaxxon library.
+ */
+
 var zaxxon = function(userConfig) {
     return this.init(userConfig);
 };
@@ -21,6 +28,10 @@ zaxxon.prototype.defaultConfig = {
     multipleSelect: 1
 };
 
+/**
+ * @param {hashtable} userConfig
+ * Spawn new map in the zaxxon's containers and bind events it.
+ */
 zaxxon.prototype.init = function(userConfig) {
     this.config = clone(this.defaultConfig);
 

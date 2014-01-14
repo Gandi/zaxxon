@@ -1,3 +1,10 @@
+/**
+ * @name layers.prototype
+ * @description
+ *
+ * Use to add elements in SVG.
+ */
+
 var Layers = (function() {
     var layers = function(m) {
         return this.init(m);

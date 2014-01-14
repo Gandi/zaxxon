@@ -1,3 +1,10 @@
+/**
+ * @name map.prototype
+ * @description
+ *
+ * Map object is used to zoom and move grid in the container.
+ */
+
 var Map = (function() {
     var map = function(z) {
         return this.init(z);
