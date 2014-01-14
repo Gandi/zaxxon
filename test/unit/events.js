@@ -15,9 +15,8 @@ test('itemmouseover', function() {
 
     mymap.addEventListener('itemmouseover', function(e) {
         ok(e.detail.item);
-        ok(e.detail.element);
-        equal(e.detail.x, x1);
-        equal(e.detail.y, y1);
+        equal(e.detail.item.x, x1);
+        equal(e.detail.item.y, y1);
     });
 
     // Trigger the event
@@ -41,9 +40,8 @@ test('itemclick', function() {
 
     mymap.addEventListener('itemclick', function(e) {
         ok(e.detail.item);
-        ok(e.detail.element);
-        equal(e.detail.x, x1);
-        equal(e.detail.y, y1);
+        equal(e.detail.item.x, x1);
+        equal(e.detail.item.y, y1);
     });
 
     // Trigger the event

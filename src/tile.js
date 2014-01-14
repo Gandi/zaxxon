@@ -37,19 +37,19 @@ var Tile = (function() {
 
     tile.prototype.tilemousedown = function(e) {
         var event = document.createEvent('CustomEvent');
-        event.initCustomEvent('tilemousedown', true, true, { element: this.element, x: this.x, y: this.y });
+        event.initCustomEvent('tilemousedown', true, true, { tile: this });
         this._parent.trigger(event);
     };
 
     tile.prototype.tilemouseup = function(e) {
         var event = document.createEvent('CustomEvent');
-        event.initCustomEvent('tilemouseup', true, true, { element: this.element, x: this.x, y: this.y });
+        event.initCustomEvent('tilemouseup', true, true, { tile: this });
         this._parent.trigger(event);
     };
 
     tile.prototype.tilemouseover = function(e) {
         var event = document.createEvent('CustomEvent');
-        event.initCustomEvent('tilemouseover', true, true, { element: this.element, x: this.x, y: this.y });
+        event.initCustomEvent('tilemouseover', true, true, { tile: this });
         this._parent.trigger(event);
     };
 

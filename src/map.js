@@ -64,7 +64,7 @@ var Map = (function() {
 
     map.prototype.trigger = function(e) {
         if (e.type == 'tilemouseover') {
-            this.items.move(e.detail.x, e.detail.y);
+            this.items.move(e.detail.tile.x, e.detail.tile.y);
         }
         if (e.type == 'tilemouseup' || e.type == 'mapmouseup') {
             if (this.items.getDragged()) {

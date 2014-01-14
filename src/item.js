@@ -13,7 +13,7 @@ var Item = (function() {
     item.prototype.init = function(i, item, x, y, params) {
         params = params || {};
         this._parent = i;
-        this.item = item;
+        this.element = item;
         this.x = x;
         this.y = y;
         this.linked = 0;
@@ -21,7 +21,7 @@ var Item = (function() {
         this.id = this._parent.getUniqueId();
         spawn(this);
         bindEvents(this);
-        this.add(this.item);
+        this.add(this.element);
 
         return this;
     };
@@ -68,7 +68,7 @@ var Item = (function() {
             var element = this;
             startDrag(self, element);
             var event = document.createEvent('CustomEvent');
-            event.initCustomEvent('itemmouseleave', true, true, { element: self.item, item : self, x: self.x, y: self.y });
+            event.initCustomEvent('itemmouseleave', true, true, { item: self });
             self.trigger(event);
             self.container.removeEventListener('mouseleave', mouseleave);
         };
@@ -103,17 +103,13 @@ var Item = (function() {
             this._parent.container.appendChild(this.container);
         }
 
-        var scale = tile.element.getBoundingClientRect().width/this._parent._parent.zoomX / this.item.width.baseVal.value;
-        var itemHeight = this.item.height.baseVal.value*scale;
+        var scale = tile.element.getBoundingClientRect().width/this._parent._parent.zoomX / this.element.width.baseVal.value;
+        var itemHeight = this.element.height.baseVal.value*scale;
         var tileHeight = tile.element.getBoundingClientRect().height/this._parent._parent.zoomX;
         var angle = Math.PI/4;
         var x = (tileY * Math.cos(angle) + tileX * Math.sin(angle));
         var y = (tileY * Math.sin(angle) - tileX * Math.cos(angle)) / 2 - itemHeight + tileHeight/2;
         this.container.setAttributeNS(null, 'transform', 'translate(' + x + ' ' + y + ') scale(' + scale + ' ' + scale + ')');
-    };
-
-    item.prototype.get = function() {
-        return this.item;
     };
 
     item.prototype.add = function(item) {
@@ -133,13 +129,13 @@ var Item = (function() {
 
     item.prototype.mouseover = function() {
         var event = document.createEvent('CustomEvent');
-        event.initCustomEvent('itemmouseover', true, true, { element: this.item, item : this, x: this.x, y: this.y });
+        event.initCustomEvent('itemmouseover', true, true, { item : this });
         this._parent.trigger(event);
     };
 
     item.prototype.click = function(e) {
         var event = document.createEvent('CustomEvent');
-        event.initCustomEvent('itemclick', true, true, { element: this.item, item : this, x: this.x, y: this.y });
+        event.initCustomEvent('itemclick', true, true, { item: this });
         this.trigger(event);
     };
 
