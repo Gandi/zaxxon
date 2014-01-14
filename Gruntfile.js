@@ -20,6 +20,14 @@ module.exports = function(grunt) {
 		        dest: 'build/<%= pkg.name %>.min.js'
 	        }
 	    },
+        blanket_qunit: {
+            all: {
+                options: {
+                    urls: ['test/generic.html?coverage=true&gruntReport'],
+                    threshold: 75
+                }
+            }
+        },
 	    less: {
             build: {
                 options: {
@@ -38,12 +46,12 @@ module.exports = function(grunt) {
     });
 
     grunt.loadNpmTasks('grunt-smash');
-    grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-less');
+    grunt.loadNpmTasks('grunt-blanket-qunit');
 
     // Default task(s).
-    grunt.registerTask('build', ['smash:build','uglify:build', 'less:build', 'qunit:all']);
+    grunt.registerTask('build', ['smash:build','uglify:build', 'less:build', 'blanket_qunit:all']);
 
 };

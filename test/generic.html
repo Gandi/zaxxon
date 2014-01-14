@@ -7,9 +7,11 @@
          <link rel="stylesheet" href="../css/zaxxon.css">
          <link rel="stylesheet" href="../css/theme/sandbox.css">
          <script src="../node_modules/qunit/support/qunit/qunit/qunit.js"></script>
-         <script src="../node_modules/blanket/dist/qunit/blanket.js"></script>
+         <script src="../node_modules/blanket/dist/qunit/blanket.js"
+    data-cover-reporter="../node_modules/grunt-blanket-qunit/reporter/grunt-reporter.js"></script>
          <script src="../build/zaxxon.js" data-cover></script>
          <script src="test-generic.js"></script>
+         <script src="test-events.js"></script>
      </head>
      <body>
          <div id="qunit"></div>
@@ -19,5 +21,7 @@
          <div id="dropItem" style="width: 500px; height: 500px;"></div>
          <div id="connect" style="width: 500px; height: 500px;"></div>
          <div id="refresh" style="width: 500px; height: 500px;"></div>
+         <div id="itemmouseover" style="width: 500px; height: 500px;"></div>
+         <div id="itemclick" style="width: 500px; height: 500px;"></div>
      </body>
  </html>
