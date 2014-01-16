@@ -59,7 +59,7 @@ var Item = (function() {
     
         self.container.addEventListener('click', function(e) {
             e.stopPropagation();
-            self.click();
+            self.click(e);
         });
 
         var startDrag = function (self, element) {
@@ -141,7 +141,7 @@ var Item = (function() {
 
     item.prototype.click = function(e) {
         var event = document.createEvent('CustomEvent');
-        event.initCustomEvent('itemclick', true, true, { item: this });
+        event.initCustomEvent('itemclick', true, true, { item: this, multiple: e.ctrlKey });
         this.trigger(event);
     };
 
