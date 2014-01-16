@@ -46,9 +46,11 @@ var Item = (function() {
 
         self.container.addEventListener('mouseup', function(e) {
             e.stopPropagation();
-            self._parent.setDragged(undefined);
-            self.container.removeEventListener('mouseleave', mouseleave);
-            self.stopDrag();
+            if(self.selected) {
+                self._parent.setDragged(undefined);
+                self.container.removeEventListener('mouseleave', mouseleave);
+                self.stopDrag();
+            }
         });
 
         self.container.addEventListener('mouseover', function(e) {
