@@ -39,8 +39,9 @@ var Item = (function() {
         self.container.addEventListener('mousedown', function(e) {
             var element = this;
             e.stopPropagation();
-
-            self.container.addEventListener('mouseleave', mouseleave);
+            if(self.selected) {
+                self.container.addEventListener('mouseleave', mouseleave);
+            }
         });
 
         self.container.addEventListener('mouseup', function(e) {
