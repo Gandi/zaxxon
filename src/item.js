@@ -91,6 +91,9 @@ var Item = (function() {
         }
         this.container.classList.add('items-' + this.x + '-' + this.y);
         this.container.setAttributeNS(xmlns, 'desc', this.x + ' ' + this.y);
+        if (this._parent.container.contains(this.container)) {
+            this._parent.container.removeChild(this.container);
+        }
         for (var i = 0; i < this._parent.container.childNodes.length; i++) {
             var desc = this._parent.container.childNodes[i].getAttribute('desc');
             var coords = desc.split(' ');
