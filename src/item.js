@@ -17,6 +17,7 @@ var Item = (function() {
         this.x = x;
         this.y = y;
         this.mapRatio = i.mapRatio;
+        this.mapIsometric = i.mapIsometric;
         this.linked = 0;
         this.selected = 0;
         this.id = this._parent.getUniqueId();
@@ -112,10 +113,10 @@ var Item = (function() {
         var x;
         var y;
         var scale;
-        var itemHeight = this.element.height.baseVal.value*scale;
         var tileHeight = tile.element.getBoundingClientRect().height/this._parent._parent.zoomX;
         if (this.mapIsometric) {
             scale = tile.element.getBoundingClientRect().width/this._parent._parent.zoomX / this.element.width.baseVal.value;
+            var itemHeight = this.element.height.baseVal.value*scale;
             var angle = Math.PI/4;
             x = (tileY * Math.cos(angle) + tileX * Math.sin(angle));
             y = (tileY * Math.sin(angle) - tileX * Math.cos(angle)) * this.mapRatio - itemHeight + tileHeight/2;
