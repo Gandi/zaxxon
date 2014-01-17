@@ -106,7 +106,7 @@ test('connect', function() {
 
     ok(el.getElementsByClassName('items-' + x1 + '-' + y1).length);
 
-    mymap.connect([x1,y1], [0,1], { color: 'blue', particlesColor: '#ffffff', particlesQuantity: 5, linked: 1 });
+    mymap.connect([x1,y1], [0,1], { size: 20, color: 'blue', particlesSize: 5, particlesColor: '#ffffff', particlesQuantity: 100, linked: 1 });
 
     var layer = el.getElementsByClassName('zaxxon-layers')[0].firstChild;
 
@@ -114,7 +114,7 @@ test('connect', function() {
     equal(layer.firstChild.getAttribute('stroke'), 'blue');
 
     // 5 circles + 1 polyline
-    equal(layer.childNodes.length, 6)
+    equal(layer.childNodes.length, 101)
 
     // Check color
     var circle = layer.childNodes[1];
