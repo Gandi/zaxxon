@@ -23,19 +23,23 @@ var Items = (function() {
 
     items.prototype.trigger = function(e) {
         if (e.type == 'itemclick') {
-            var selected = e.detail.item.selected;
-            // Select multiple
+            var action;
+            if (e.detail.item.selected) {
+                if (this._parent.multipleSelect && !e.detail.multiple && this.getSelection().length > 1) {
+                    action = 1
+                } else {
+                    action = 0;
+                }
+            } else {
+                action = 1
+            }
             if (!this._parent.multipleSelect || !e.detail.multiple) {
                 this.deselectAll();
             }
-            if (selected) {
-                if (this._parent.multipleSelect && !e.detail.multiple) {
-                    e.detail.item.select();
-                } else {
-                    e.detail.item.deselect();
-                }
-            } else {
+            if (action) {
                 e.detail.item.select();
+            } else {
+                e.detail.item.deselect();
             }
             var event = document.createEvent('CustomEvent');
             event.initCustomEvent('updatedselection', true, true, { items: this.getSelection() });
