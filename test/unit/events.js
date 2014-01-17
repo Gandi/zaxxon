@@ -13,12 +13,12 @@ test('itemmouseover', function() {
 
     ok(el.getElementsByClassName('items-' + x1 + '-' + y1).length);
 
-    mymap.addEventListener('itemmouseover', function(e) {
+    mymap.addEventListener('itemmouseover', mouseover);
+    var mouseover = function(e) {
         ok(e.detail.item);
         equal(e.detail.item.x, x1);
         equal(e.detail.item.y, y1);
-    });
-
+    };
     // Trigger the event
     item.mouseover();
 });
@@ -38,12 +38,12 @@ test('itemclick', function() {
 
     ok(el.getElementsByClassName('items-' + x1 + '-' + y1).length);
 
-    mymap.addEventListener('itemclick', function(e) {
+    mymap.addEventListener('itemclick', click);
+    var click = function(e) {
         ok(e.detail.item);
         equal(e.detail.item.x, x1);
         equal(e.detail.item.y, y1);
-    });
-
+    };
     // Trigger the event
     item.click();
 });
