@@ -16,6 +16,7 @@ var Item = (function() {
         this.element = item;
         this.x = x;
         this.y = y;
+        this.mapRatio = i.mapRatio;
         this.linked = 0;
         this.selected = 0;
         this.id = this._parent.getUniqueId();
@@ -108,13 +109,23 @@ var Item = (function() {
         if (!this._parent.container.contains(this.container)) {
             this._parent.container.appendChild(this.container);
         }
-
-        var scale = tile.element.getBoundingClientRect().width/this._parent._parent.zoomX / this.element.width.baseVal.value;
+        var x;
+        var y;
+        var scale;
         var itemHeight = this.element.height.baseVal.value*scale;
         var tileHeight = tile.element.getBoundingClientRect().height/this._parent._parent.zoomX;
-        var angle = Math.PI/4;
-        var x = (tileY * Math.cos(angle) + tileX * Math.sin(angle));
-        var y = (tileY * Math.sin(angle) - tileX * Math.cos(angle)) / 2 - itemHeight + tileHeight/2;
+        if (this.mapIsometric) {
+            scale = tile.element.getBoundingClientRect().width/this._parent._parent.zoomX / this.element.width.baseVal.value;
+            var angle = Math.PI/4;
+            x = (tileY * Math.cos(angle) + tileX * Math.sin(angle));
+            y = (tileY * Math.sin(angle) - tileX * Math.cos(angle)) * this.mapRatio - itemHeight + tileHeight/2;
+        } else {
+            var scaleX = tile.element.getBoundingClientRect().width/this._parent._parent.zoomX / this.element.width.baseVal.value;
+            var scaleY = tile.element.getBoundingClientRect().height/this._parent._parent.zoomY / this.element.height.baseVal.value;
+            scale = Math.min(scaleX, scaleY);
+            x = tileX;
+            y = tileY * this.mapRatio;
+        }
         this.container.setAttributeNS(null, 'transform', 'translate(' + x + ' ' + y + ') scale(' + scale + ' ' + scale + ')');
     };
 

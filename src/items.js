@@ -16,6 +16,8 @@ var Items = (function() {
         this._parent = m;
         this.rows = m.rows;
         this.cols = m.cols;
+        this.mapRatio = m.mapRatio;
+        this.mapIsometric = m.mapIsometric;
         this.items = [];
         spawn(this);
         return this;

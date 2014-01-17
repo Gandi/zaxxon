@@ -21,6 +21,8 @@ var Map = (function() {
         this.zoomY = this.zoom / this.zoomRatio;
         this.cols = z.config.tiles.cols;
         this.rows = z.config.tiles.rows;
+        this.mapIsometric = z.config.mapIsometric;
+        this.mapRatio = z.config.mapRatio;
 
         this.tiles = new Tiles(this);
         this.layers = new Layers(this);
@@ -31,10 +33,13 @@ var Map = (function() {
 
         this.containerWidth = this.container.getBoundingClientRect().width * this.zoomX;
         this.containerHeight = this.container.getBoundingClientRect().height * this.zoomY;
-
-        this.containerX = mainContainerWidth/2 - this.containerWidth/2;
-
-        this.containerY = mainContainerHeight/2;
+        if (this.mapIsometric) {
+            this.containerX = mainContainerWidth/2 - this.containerWidth/2;
+            this.containerY = mainContainerHeight/2;
+        } else {
+            this.containerX = mainContainerWidth/2 - this.containerWidth/2;
+            this.containerY = mainContainerHeight/2 - this.containerHeight/2;
+        }
         updateContainer(this);
 
         return this;
@@ -100,17 +105,30 @@ var Map = (function() {
     map.prototype.move = function(deltaX, deltaY) {
         var mainContainerWidth = this._parent.container.width.baseVal.value;
         var mainContainerHeight = this._parent.container.height.baseVal.value;
+        if(this.mapIsometric) {
+            if (this.containerWidth < mainContainerWidth
+               || (this.containerX + deltaX < 0
+                   && this.containerX + deltaX > mainContainerWidth - this.containerWidth)) {
+                this.containerX += deltaX;
+            }
+    
+            if (this.containerHeight < mainContainerHeight
+               || (this.containerY + deltaY < this.containerHeight/2
+                   && this.containerY + deltaY > mainContainerHeight - this.containerHeight/2)) {
+                this.containerY += deltaY;
+            }
+        } else {
+            if (this.containerWidth < mainContainerWidth
+               || (this.containerX + deltaX < 0
+                   && this.containerX + deltaX > mainContainerWidth - this.containerWidth)) {
+                this.containerX += deltaX;
+            }
 
-        if (this.containerWidth < mainContainerWidth
-           || (this.containerX + deltaX < 0
-               && this.containerX + deltaX > mainContainerWidth - this.containerWidth)) {
-            this.containerX += deltaX;
-        }
-
-        if (this.containerHeight < mainContainerHeight
-           || (this.containerY + deltaY < this.containerHeight/2
-               && this.containerY + deltaY > mainContainerHeight - this.containerHeight/2)) {
-            this.containerY += deltaY;
+            if (this.containerHeight < mainContainerHeight
+               || (this.containerY + deltaY <= 0
+                   && this.containerY + deltaY > mainContainerHeight - this.containerHeight)) {
+                this.containerY += deltaY;
+            }
         }
 
         updateContainer(this);

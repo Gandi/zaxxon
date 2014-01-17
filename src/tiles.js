@@ -12,6 +12,8 @@ var Tiles = (function() {
 
     tiles.prototype.init = function(m) {
         this._parent = m;
+        this.mapRatio = m.mapRatio;
+        this.mapIsometric = m.mapIsometric;
         this.container = m.containerGround;
         this.tiles = [];
         spawn(this);
@@ -29,7 +31,7 @@ var Tiles = (function() {
                 self.tiles[i][j] = new Tile(self, i, j);
             }
         }
-        self.container.setAttributeNS(null, 'transform', 'scale(1 0.5)');
+        self.container.setAttributeNS(null, 'transform', 'scale(1 ' + self.mapRatio + ')');
     };
 
     tiles.prototype.get = function(x,y) {

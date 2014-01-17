@@ -20,6 +20,8 @@ zaxxon.prototype.defaultConfig = {
         cols: 15,
         rows: 15
     },
+    mapRatio: 0.5,
+    mapIsometric: 1,
     zoomRatio: 10,
     zoom: 5,
     minZoom: 5,

@@ -11,6 +11,7 @@ var Tile = (function() {
         // Arbitrary size
         this.x = x;
         this.y = y;
+        this.mapAngle = t.mapIsometric ? '-45' : 0;
         this.container = t.containerTiles;
         spawn(this);
         return this;
@@ -22,7 +23,7 @@ var Tile = (function() {
         rect.setAttributeNS(null, 'y', self.size*self.y);
         rect.setAttributeNS(null, 'width', self.size);
         rect.setAttributeNS(null, 'height', self.size);
-        rect.setAttributeNS(null, 'transform', 'rotate(-45 ' + self.rotationCenter + ' ' + self.rotationCenter + ')');
+        rect.setAttributeNS(null, 'transform', 'rotate(' + self.mapAngle + ' ' + self.rotationCenter + ' ' + self.rotationCenter + ')');
         rect.addEventListener('mouseover', function(e) { self.tilemouseover(e); });
         rect.addEventListener('mouseup', function(e) {
             if(self._parent._parent.items.getDragged()) {
