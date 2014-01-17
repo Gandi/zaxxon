@@ -29,7 +29,11 @@ var Items = (function() {
                 this.deselectAll();
             }
             if (selected) {
-                e.detail.item.deselect();
+                if (this._parent.multipleSelect && !e.detail.multiple) {
+                    e.detail.item.select();
+                } else {
+                    e.detail.item.deselect();
+                }
             } else {
                 e.detail.item.select();
             }
