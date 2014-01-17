@@ -23,11 +23,12 @@ var Items = (function() {
 
     items.prototype.trigger = function(e) {
         if (e.type == 'itemclick') {
+            var selected = e.detail.item.selected;
             // Select multiple
             if (!this._parent.multipleSelect || !e.detail.multiple) {
                 this.deselectAll();
             }
-            if (e.detail.item.selected) {
+            if (selected) {
                 e.detail.item.deselect();
             } else {
                 e.detail.item.select();
