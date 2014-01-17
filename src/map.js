@@ -22,7 +22,7 @@ var Map = (function() {
         this.cols = z.config.tiles.cols;
         this.rows = z.config.tiles.rows;
         this.mapIsometric = z.config.mapIsometric;
-        this.mapRatio = z.config.mapRatio;
+        this.mapRatio = this.mapIsometric ? z.config.mapRatio : 1;
 
         this.tiles = new Tiles(this);
         this.layers = new Layers(this);

@@ -6,6 +6,7 @@ var Link = (function() {
     link.prototype.init = function(m, coords1, coords2, userParams) {
         this.cols = m.cols;
         this.rows = m.rows;
+        this.mapAngle = m.mapIsometric ? '-45' : 0;
         this.tileSize = Tile.prototype.size;
         this.items = m.items.items;
         this.coords1 = coords1;
@@ -66,9 +67,16 @@ var Link = (function() {
             var x = tileSize*node.coords.x + tileSize/2;
             var y = tileSize*node.coords.y + tileSize/2;
             points.push(x + ' ' + y);
-            
-            var pathX = (y * Math.cos(angle) + x * Math.sin(angle));
-            var pathY = (y * Math.sin(angle) - x * Math.cos(angle));
+
+            var pathX;
+            var pathY;           
+            if (this.mapIsometric) {
+                pathX = (y * Math.cos(angle) + x * Math.sin(angle));
+                pathY = (y * Math.sin(angle) - x * Math.cos(angle));
+            } else {
+                pathX = x;
+                pathY = y;
+            }
             if (i == 0) {
                 d[0] = 'M ' + pathX + ' ' + pathY;
             } else {
@@ -81,8 +89,16 @@ var Link = (function() {
             var node = path[i];
             var x = tileSize*node.coords.x + tileSize/2;
             var y = tileSize*node.coords.y + tileSize/2;
-            var pathX = (y * Math.cos(angle) + x * Math.sin(angle));
-            var pathY = (y * Math.sin(angle) - x * Math.cos(angle));
+            var pathX;
+            var pathY;
+            if (this.mapIsometric) {
+                pathX = (y * Math.cos(angle) + x * Math.sin(angle));
+                pathY = (y * Math.sin(angle) - x * Math.cos(angle));
+            } else {
+                pathX = x;
+                pathY = y;
+            }
+
             if (i == 0) {
                 d[1] = 'M ' + pathX + ' ' + pathY;
             } else {
@@ -94,7 +110,7 @@ var Link = (function() {
         item.setAttributeNS(null,'fill', 'none');
         item.setAttributeNS(null,'stroke', color);
         item.setAttributeNS(null,'stroke-width', size);
-        item.setAttributeNS(null, 'transform', 'rotate(-45 0 0)');
+        item.setAttributeNS(null, 'transform', 'rotate(' + this.mapAngle + ' 0 0)');
         layer.push(item);
 
         for (var i = 0; i < particleQuantity; i++) {
@@ -105,7 +121,6 @@ var Link = (function() {
             circle.setAttributeNS(null, 'cy', 0);
             circle.setAttributeNS(null, 'r', particleSize);
             circle.setAttributeNS(null, 'fill', particleColor);
-            circle.setAttributeNS(null, 'transform', 'rotate(-45 0 0)');
 
             var anim = document.createElementNS(xmlns, 'animateMotion');
             anim.setAttributeNS(null, 'dur', Math.ceil(Math.random()*particleSpeed));
