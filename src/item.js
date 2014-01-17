@@ -141,7 +141,7 @@ var Item = (function() {
 
     item.prototype.click = function(e) {
         var event = document.createEvent('CustomEvent');
-        event.initCustomEvent('itemclick', true, true, { item: this, multiple: e.ctrlKey });
+        event.initCustomEvent('itemclick', true, true, { item: this, multiple: e ? e.ctrlKey : false });
         this.trigger(event);
     };
 
