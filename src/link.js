@@ -6,7 +6,8 @@ var Link = (function() {
     link.prototype.init = function(m, coords1, coords2, userParams) {
         this.cols = m.cols;
         this.rows = m.rows;
-        this.mapAngle = m.mapIsometric ? '-45' : 0;
+        this.mapIsometric = m.mapIsometric;
+        this.mapAngle = this.mapIsometric ? '-45' : 0;
         this.tileSize = Tile.prototype.size;
         this.items = m.items.items;
         this.coords1 = coords1;
@@ -69,7 +70,7 @@ var Link = (function() {
             points.push(x + ' ' + y);
 
             var pathX;
-            var pathY;           
+            var pathY;
             if (this.mapIsometric) {
                 pathX = (y * Math.cos(angle) + x * Math.sin(angle));
                 pathY = (y * Math.sin(angle) - x * Math.cos(angle));
@@ -188,7 +189,7 @@ var Link = (function() {
 
             for(var i = 0; i < neighbors.length; i++) {
                 var neighbor = neighbors[i];
-                
+
                 var gScore = currentNode.g + 1;
 
                 if((!neighbor.closed || neighbor.coords == end.coords) && (!neighbor.visited || gScore < neighbor.g)) {
@@ -212,7 +213,7 @@ var Link = (function() {
 		var d2 = Math.abs (coords2.y - coords1.y);
 		return d1 + d2;
     }
-    
+
     var neighborNodes = function(grid, coords, diagonal) {
         var nodes = [];
         var x = coords.x;
@@ -231,4 +232,3 @@ var Link = (function() {
 
     return link;
 })();
-
